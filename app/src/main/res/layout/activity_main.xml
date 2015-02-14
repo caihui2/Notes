@@ -4,13 +4,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
+    <com.netos.activity.view.SlideMenu
+        android:id="@+id/slideMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <fragment
             android:id="@+id/menu_fragment"
             android:name="com.netos.activity.fragment.MenuFragment"
             android:layout_width="240dip"
             android:layout_height="match_parent" />
-
+        <LinearLayout
+            android:id="@+id/content_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/bu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClicks"
+                android:text="开"/>
+            </LinearLayout>
+    </com.netos.activity.view.SlideMenu>
 
 
 

@@ -1,31 +1,58 @@
 package com.netos.activity.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.netos.activity.R;
 import com.notos.entity.MenuSelectEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by yangcaihui on 15/2/9.
  */
-public class MenuSelectAdapter extends BaseAdapter {
+public class ListViewMenuSelectAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater mInflater;
     private List<MenuSelectEntity> mMenuSelectEntity ;
-
-    public MenuSelectAdapter(Context context,
-           List<MenuSelectEntity> mMenuSelectEntity){
+    private int selectPosition;
+    private boolean listPointState = true;
+    public ListViewMenuSelectAdapter(Context context){
         this.context = context;
-        this.mMenuSelectEntity = mMenuSelectEntity;
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        listData();
+    }
+
+    public boolean isListPointState() {
+        return listPointState;
+    }
+
+    public void setListPointState(boolean listPointState) {
+        this.listPointState = listPointState;
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void listData(){
+        mMenuSelectEntity = new ArrayList<MenuSelectEntity>();
+        MenuSelectEntity e1 = new MenuSelectEntity(context.getDrawable(R.drawable.menu_all_note_icon),"首页");
+        MenuSelectEntity e2 = new MenuSelectEntity(context.getDrawable(R.drawable.menu_note_book_icon),"笔记本");
+        MenuSelectEntity e3 = new MenuSelectEntity(context.getDrawable(R.drawable.menu_group_icon),"云协作");
+        mMenuSelectEntity.add(e1);
+        mMenuSelectEntity.add(e2);
+        mMenuSelectEntity.add(e3);
+    }
+
+    public void setSelectPosition(int selectPosition){
+        this.selectPosition = selectPosition;
     }
 
     @Override
@@ -42,7 +69,6 @@ public class MenuSelectAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-
         return position;
     }
 
@@ -59,7 +85,14 @@ public class MenuSelectAdapter extends BaseAdapter {
         }else{
             mHanderView = (HanderView)convertView.getTag();
         }
-   
+        MenuSelectEntity entity = mMenuSelectEntity.get(position);
+        mHanderView.imMenuIcon.setImageDrawable(entity.getSelectIcn());
+        mHanderView.tvMenuName.setText(entity.getSelectName());
+        if(selectPosition == position && listPointState){
+            mHanderView.imMenuPoint.setVisibility(View.VISIBLE);
+        }else{
+            mHanderView.imMenuPoint.setVisibility(View.INVISIBLE);
+        }
         return convertView;
     }
 
@@ -68,4 +101,5 @@ public class MenuSelectAdapter extends BaseAdapter {
         private ImageView imMenuIcon;
         private TextView tvMenuName;
     }
+
 }

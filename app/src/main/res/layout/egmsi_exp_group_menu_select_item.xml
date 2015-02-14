@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
+
     <ImageView
-        android:id="@+id/im_menu_point"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dip"
-        android:layout_centerVertical="true"
-        android:src="@drawable/menu_selector"
-        />
-    <ImageView
-        android:id="@+id/im_menu_icon"
+        android:id="@+id/gim_menu_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/menu_all_note_icon"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dip"
-        android:layout_toRightOf="@+id/im_menu_point"
+        android:layout_marginLeft="35dip"
         />
     <TextView
-        android:id="@+id/tv_menu_item_name"
+        android:id="@+id/gtv_menu_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/im_menu_icon"
+        android:layout_toRightOf="@id/gim_menu_icon"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dip"
         android:textSize="15sp"
         android:textColor="@android:color/black"
         android:text="首页"/>
-
+    <ImageView
+        android:id="@+id/gim_menu_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="60dip"
+        android:src="@drawable/menu_more_expand"
+        android:layout_toRightOf="@id/gtv_menu_item_name"
+        />
 </RelativeLayout>

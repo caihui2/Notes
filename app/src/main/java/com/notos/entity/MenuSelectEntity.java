@@ -9,6 +9,7 @@ public class MenuSelectEntity {
     private Drawable selectIcn;
     private String selectName;
 
+
     public MenuSelectEntity(Drawable selectIcn, String selectName) {
         this.selectIcn = selectIcn;
         this.selectName = selectName;
