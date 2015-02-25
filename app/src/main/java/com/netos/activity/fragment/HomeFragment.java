@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.netos.activity.R;
+import com.netos.darabase.DBUrils;
+import com.notos.entity.NotesObjInfo;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class HomeFragment extends Fragment {
      View rootView;
      Spinner spTitle;
      Context mActivity;
+     ListView lvNotes;
 
     @Nullable
     @Override
@@ -40,6 +43,8 @@ public class HomeFragment extends Fragment {
        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mActivity,
                android.R.layout.simple_spinner_dropdown_item,str);
        spTitle.setAdapter(adapter);
+       lvNotes = (ListView)rootView.findViewById(R.id.lv_notes);
+
     }
 
 }

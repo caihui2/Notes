@@ -76,8 +76,6 @@ public class MainActivity extends Activity implements MenuFragment.NextScreenNum
            mSlideMenu.closeMenu();
        }
     }
-    public void onClick(View voi){
-       System.out.println("测试运行开始————");
-    }
+
 
 }
