@@ -110,8 +110,6 @@ public class ExpListViewMenuSelectAdapter extends BaseExpandableListAdapter {
                     convertView.findViewById(R.id.gim_menu_icon);
             mGroupViewHandler.gTvMenuName = (TextView)
                     convertView.findViewById(R.id.gtv_menu_item_name);
-            mGroupViewHandler.gIMenuState = (ImageView)
-                    convertView.findViewById(R.id.gim_menu_state);
             convertView.setTag(mGroupViewHandler);
         }else{
             mGroupViewHandler = (GroupViewHandler)convertView.getTag();
@@ -119,14 +117,12 @@ public class ExpListViewMenuSelectAdapter extends BaseExpandableListAdapter {
         MenuSelectEntity gEntity = (MenuSelectEntity) getGroup(groupPosition);
         mGroupViewHandler.gImMenuIcon.setImageDrawable(gEntity.getSelectIcn());
         mGroupViewHandler.gTvMenuName.setText(gEntity.getSelectName());
-        System.out.println("gggg");
         return convertView;
     }
 
     private class GroupViewHandler {
         private ImageView gImMenuIcon;
         private TextView gTvMenuName;
-        private ImageView gIMenuState;
     }
 
     @Override
@@ -154,7 +150,6 @@ public class ExpListViewMenuSelectAdapter extends BaseExpandableListAdapter {
         }else{
             mChildViewHandler.cIMenuPoint.setVisibility(View.INVISIBLE);
         }
-        System.out.println("cc");
         return convertView;
     }
 

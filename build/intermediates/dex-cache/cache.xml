@@ -2,32 +2,32 @@
 <items version="2" >
 
     <item
-        jar="/Users/yangcaihui/Documents/androidCode/studio/Netos/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jar="/home/chyang/bin/adt/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
         jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/Users/yangcaihui/Documents/androidCode/studio/Netos/app/build/intermediates/pre-dexed/debug/classes-2adafaaefb30846a8d609523ba905db53b19cecf.jar" />
-    </item>
-    <item
-        jar="/Users/yangcaihui/Documents/androidSDK/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
+        revision="21.1.1"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/Users/yangcaihui/Documents/androidCode/studio/Netos/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-220e5cfc0972932daea4f711f5fe594c4573f07b.jar" />
+        <dex dex="/home/chyang/StudioCode/Netos/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-6b4ace5e7e4c3241ce598d123edc4a212c6b3b82.jar" />
     </item>
     <item
-        jar="/Users/yangcaihui/Documents/androidCode/studio/Netos/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jar="/home/chyang/StudioCode/Netos/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
-        revision="21.1.2"
+        revision="21.1.1"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/yangcaihui/Documents/androidCode/studio/Netos/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-d399cd748ceb672cb01c971623f63c223f8551fc.jar" />
+        <dex dex="/home/chyang/StudioCode/Netos/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-33a3bf59d192aef7a27e2f562321307e3b002d37.jar" />
     </item>
     <item
-        jar="/Users/yangcaihui/Documents/androidCode/studio/Netos/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jar="/home/chyang/StudioCode/Netos/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
         jumboMode="false"
-        revision="21.1.2"
+        revision="21.1.1"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/home/chyang/StudioCode/Netos/app/build/intermediates/pre-dexed/debug/classes-a5d94ccbe8eb971fa0ea484b4a0c757dc871dc06.jar" />
+    </item>
+    <item
+        jar="/home/chyang/StudioCode/Netos/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/yangcaihui/Documents/androidCode/studio/Netos/app/build/intermediates/pre-dexed/debug/classes-f7982593130b0df23ad7c9659770b2bfacc2fd3e.jar" />
+        <dex dex="/home/chyang/StudioCode/Netos/app/build/intermediates/pre-dexed/debug/classes-0862ff6ac01ca04d48a045fab9396345509504e2.jar" />
     </item>
 
 </items>
