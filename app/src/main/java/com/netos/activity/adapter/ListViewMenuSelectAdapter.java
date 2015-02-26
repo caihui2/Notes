@@ -96,7 +96,7 @@ public class ListViewMenuSelectAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private static class HanderView{
+    private  class HanderView{
         private ImageView imMenuPoint;
         private ImageView imMenuIcon;
         private TextView tvMenuName;

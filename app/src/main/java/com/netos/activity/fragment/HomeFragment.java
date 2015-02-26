@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.netos.activity.R;
+import com.netos.activity.adapter.NotesDataAdapter;
 import com.netos.darabase.DBUrils;
 import com.notos.entity.NotesObjInfo;
 
@@ -43,8 +44,15 @@ public class HomeFragment extends Fragment {
        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mActivity,
                android.R.layout.simple_spinner_dropdown_item,str);
        spTitle.setAdapter(adapter);
-       lvNotes = (ListView)rootView.findViewById(R.id.lv_notes);
 
+       lvNotes = (ListView)rootView.findViewById(R.id.lv_notes);
+        DBUrils db = new DBUrils(mActivity,false);
+        //db.add(new NotesObjInfo("笔记","阿萨达卡收到记录刷卡的进来卡萨多久开了撒快点就","2015年2月26日",1));
+        List<NotesObjInfo> mNotesObjInfoList = db.querys();
+        if(mNotesObjInfoList != null) {
+            NotesDataAdapter noteAdapter = new NotesDataAdapter(mActivity,mNotesObjInfoList);
+            lvNotes.setAdapter(noteAdapter);
+        }
     }
 
 }

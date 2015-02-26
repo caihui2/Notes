@@ -15,6 +15,7 @@ public class OpenDB  extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table notes(" +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "title TEXT,content TEXT," +
                 "time VARCHAR(20)," +
                 "collection INTEGER)");

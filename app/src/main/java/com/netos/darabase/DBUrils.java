@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.notos.entity.NotesObjInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class DBUrils {
         ContentValues values = new ContentValues();
         values.put("title",mNotesObjInfo.getTitle());
         values.put("content",mNotesObjInfo.getContent());
-        values.put("time",mNotesObjInfo.getTitle());
+        values.put("time",mNotesObjInfo.getTime());
         values.put("collection",mNotesObjInfo.getCollection());
         mSqLiteDatabase.insert(DB_TABLE_NAME, null, values);
         mSqLiteDatabase.close();
@@ -45,7 +46,7 @@ public class DBUrils {
      * @return NotesObjInfo List
      */
     public List<NotesObjInfo> querys(){
-        List<NotesObjInfo> mNotesObjInfoList = null;
+        List<NotesObjInfo> mNotesObjInfoList = new ArrayList<NotesObjInfo>();
         Cursor mCursor = mSqLiteDatabase.query(DB_TABLE_NAME, null, null, null, null, null, null);
         if(mCursor != null){
             while (mCursor.moveToNext()){
