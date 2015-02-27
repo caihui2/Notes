@@ -18,7 +18,8 @@ public class OpenDB  extends SQLiteOpenHelper {
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "title TEXT,content TEXT," +
                 "time VARCHAR(20)," +
-                "collection INTEGER)");
+                "collection INTEGER," +
+                "noteType VARCHAR(20))");
     }
 
     @Override
