@@ -1,10 +1,12 @@
 package com.netos.activity;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
+
+import android.content.ComponentName;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
 
 
@@ -20,6 +22,18 @@ public class SelectNoteTypeActivity extends Activity {
         //TODO
         finish();
     }
+
+    public void addNotype(View view){
+       AlertDialog.Builder  mBuilder= new AlertDialog.Builder(this);
+        mBuilder.setTitle("增加类型");
+        mBuilder.setMessage("时候");
+        mBuilder.show();
+
+
+
+
+    }
+
 
 
 

@@ -8,7 +8,7 @@
         android:id="@+id/rela1"
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:background="#0080FF">
+        android:background="@android:color/holo_blue_dark">
 
         <ImageView
             android:id="@+id/im_openMenu"

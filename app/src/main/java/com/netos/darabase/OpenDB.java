@@ -20,6 +20,7 @@ public class OpenDB  extends SQLiteOpenHelper {
                 "time VARCHAR(20)," +
                 "collection INTEGER," +
                 "noteType VARCHAR(20))");
+        db.execSQL("create table notesType(noteType VARCHAR(20))");
     }
 
     @Override

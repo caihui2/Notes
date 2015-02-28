@@ -57,4 +57,14 @@ public class AddNotesActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
        //TODO
     }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
 }

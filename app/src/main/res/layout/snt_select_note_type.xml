@@ -8,7 +8,7 @@
         android:id="@+id/rela1"
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:background="@drawable/notification_bg_normal_pressed">
+        android:background="@android:color/holo_blue_dark">
 
         <ImageView
             android:id="@+id/im_openMenu"
@@ -22,9 +22,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:layout_centerVertical="true"/>
+            android:textColor="@android:color/white"
+            android:layout_toRightOf="@id/im_openMenu"
+            android:text="移动笔记本"
+            android:layout_centerVertical="true"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/antb_add_note_tepy_button"
+            android:background="@android:color/holo_blue_dark"
+            android:onClick="addNotype"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dip"
+            />
 
     </RelativeLayout>
-
-
+    <ListView
+        android:id="@+id/lv_selectType"
+        android:layout_below="@id/rela1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </RelativeLayout>

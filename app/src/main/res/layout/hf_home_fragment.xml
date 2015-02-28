@@ -7,7 +7,7 @@
       android:id="@+id/rela1"
       android:layout_width="match_parent"
       android:layout_height="50dip"
-      android:background="@drawable/notification_bg_normal_pressed">
+      android:background="@android:color/holo_blue_dark">
       <ImageView
           android:id="@+id/im_openMenu"
           android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
             android:id="@+id/im_addNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/add_note_button"
+            android:src="@drawable/anb_add_note_button"
             android:layout_margin="20dip"
             android:layout_gravity="right|bottom" />
     </FrameLayout>
