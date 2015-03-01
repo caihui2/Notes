@@ -19,6 +19,7 @@ public class DBUrils {
     private static final String DB_NAME = "db_notes";
     private static final int DB_VERSION = 1;
     private static final String DB_TABLE_NAME = "notes";
+    private static final String DB_TABLE_NAME_ONE = "notesType";
 
     private static final String DB_TABLE_NAME_TITLE ="title";
     private static final String DB_TABLE_NAME_CONTENT = "content";
@@ -47,6 +48,14 @@ public class DBUrils {
         mSqLiteDatabase.close();
     }
 
+    public long addType(String typeName){
+        ContentValues values = new ContentValues();
+        values.put(DB_TABLE_NAME_NOTE_TYPE,typeName);
+      long result = mSqLiteDatabase.insert(DB_TABLE_NAME_ONE,null,values);
+        mSqLiteDatabase.close();
+        return result;
+    }
+
     /**
      *
      * @return NotesObjInfo List
@@ -73,7 +82,7 @@ public class DBUrils {
      */
     public List<String> querysType(){
         List<String> mStringList = new ArrayList<String>();
-        Cursor mCursor = mSqLiteDatabase.query(DB_TABLE_NAME,new String[]{DB_TABLE_NAME_NOTE_TYPE},null,null,null,null,null);
+        Cursor mCursor = mSqLiteDatabase.query(DB_TABLE_NAME_ONE,new String[]{DB_TABLE_NAME_NOTE_TYPE},null,null,null,null,null);
         if(mCursor != null){
             while(mCursor.moveToNext()){
                 String noteType =  mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_NOTE_TYPE));
@@ -82,8 +91,6 @@ public class DBUrils {
         }
         return mStringList;
     }
-
-
 
 
 }

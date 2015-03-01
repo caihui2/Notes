@@ -2,32 +2,32 @@
 <items version="2" >
 
     <item
-        jar="/home/chyang/StudioCode/Notes/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/home/chyang/StudioCode/Notes/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-3d43a29d5b7e0fbab1a6e0b6eb7f3fe4efb73667.jar" />
-    </item>
-    <item
-        jar="/home/chyang/bin/adt/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/home/chyang/StudioCode/Notes/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-6b4ace5e7e4c3241ce598d123edc4a212c6b3b82.jar" />
-    </item>
-    <item
-        jar="/home/chyang/StudioCode/Notes/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jar="/Users/yangcaihui/Documents/GitHub/Notes/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/home/chyang/StudioCode/Notes/app/build/intermediates/pre-dexed/debug/classes-205b9ec94a35c9c04c838a0ed811afd66d7af9b7.jar" />
+        <dex dex="/Users/yangcaihui/Documents/GitHub/Notes/app/build/intermediates/pre-dexed/debug/classes-9cf3200f1a9b88251d9c95d23b1e2acf52227312.jar" />
     </item>
     <item
-        jar="/home/chyang/StudioCode/Notes/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jar="/Users/yangcaihui/Documents/GitHub/Notes/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/yangcaihui/Documents/GitHub/Notes/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-c8bb28c0e7f90cc7cad77ecab4762861d62d7596.jar" />
+    </item>
+    <item
+        jar="/Users/yangcaihui/Documents/GitHub/Notes/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/home/chyang/StudioCode/Notes/app/build/intermediates/pre-dexed/debug/classes-a04f58c046c87acf74866e38b00b966c873b185b.jar" />
+        <dex dex="/Users/yangcaihui/Documents/GitHub/Notes/app/build/intermediates/pre-dexed/debug/classes-75a380f2ec4af098f8cfaff08f129f1dc0fe4651.jar" />
+    </item>
+    <item
+        jar="/Users/yangcaihui/Documents/androidSDK/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/yangcaihui/Documents/GitHub/Notes/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-220e5cfc0972932daea4f711f5fe594c4573f07b.jar" />
     </item>
 
 </items>
