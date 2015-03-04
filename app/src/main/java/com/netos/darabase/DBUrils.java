@@ -52,7 +52,6 @@ public class DBUrils {
         ContentValues values = new ContentValues();
         values.put(DB_TABLE_NAME_NOTE_TYPE,typeName);
       long result = mSqLiteDatabase.insert(DB_TABLE_NAME_ONE,null,values);
-        mSqLiteDatabase.close();
         return result;
     }
 
@@ -78,6 +77,27 @@ public class DBUrils {
 
     /**
      *
+     * @param typeName
+     * @return
+     */
+    public List<NotesObjInfo> querysTypeObjCount(String typeName){
+        List<NotesObjInfo> mNotesObjInfoList = new ArrayList<NotesObjInfo>();
+        Cursor mCursor = mSqLiteDatabase.query(DB_TABLE_NAME,null,
+                DB_TABLE_NAME_NOTE_TYPE+"=?",new String[]{typeName},null,null,null);
+        if(mCursor != null){
+            while(mCursor.moveToNext()){
+                String title = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_TITLE));
+                String content = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_CONTENT));
+                String time = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_TIME));
+                int collection = mCursor.getInt(mCursor.getColumnIndex(DB_TABLE_NAME_COLLECTION));
+                mNotesObjInfoList.add(new NotesObjInfo(title,content,time,collection));
+            }
+        }
+        return mNotesObjInfoList;
+    }
+
+    /**
+     *
      * @return note TYPE count
      */
     public List<String> querysType(){
@@ -92,5 +112,12 @@ public class DBUrils {
         return mStringList;
     }
 
+
+   public int deleteType(String typeName){
+       int result = 0;
+       result = mSqLiteDatabase.delete(DB_TABLE_NAME_ONE,DB_TABLE_NAME_NOTE_TYPE+"=?",
+               new String[]{typeName});
+       return result;
+   }
 
 }

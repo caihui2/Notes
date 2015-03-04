@@ -39,7 +39,7 @@
             />
 
     </RelativeLayout>
-    <ListView
+    <com.netos.activity.view.SwipeListView.SwipeMenuListView
         android:id="@+id/lv_selectType"
         android:layout_below="@id/rela1"
         android:layout_width="match_parent"
