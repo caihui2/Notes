@@ -66,8 +66,8 @@
       <file leaf-file-name="AddNotesActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/netos/activity/AddNotesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40439934" vertical-offset="971" max-vertical-offset="1562">
-              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.62774956" vertical-offset="971" max-vertical-offset="1562">
+              <caret line="66" column="9" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -724,8 +724,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/snt_select_note_type.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/netos/darabase/DBUrils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/netos/activity/adapter/SelectNoteTypeAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/netos/activity/AddNotesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/netos/activity/SelectNoteTypeActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/netos/activity/AddNotesActivity.java" />
       </list>
     </option>
   </component>
@@ -1702,8 +1702,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/netos/activity/AddNotesActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40439934" vertical-offset="971" max-vertical-offset="1562">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.62774956" vertical-offset="971" max-vertical-offset="1562">
+          <caret line="66" column="9" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
           <folding />
         </state>
       </provider>
