@@ -75,6 +75,19 @@ public class DBUrils {
         return mNotesObjInfoList;
     }
 
+    public String queryTypeItem(String typeName){
+        String result = null;
+        Cursor mCursor = mSqLiteDatabase.query(DB_TABLE_NAME_ONE,null,DB_TABLE_NAME_NOTE_TYPE+"=?",
+                new String[]{typeName},null,null,null);
+        if(mCursor != null){
+            while(mCursor.moveToNext()){
+               result = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_NOTE_TYPE));
+            }
+        }
+
+        return result;
+    }
+
     /**
      *
      * @param typeName
@@ -113,11 +126,20 @@ public class DBUrils {
     }
 
 
+    public int deleteTypeNote(String typeName){
+        int result = 0;
+        result = mSqLiteDatabase.delete(DB_TABLE_NAME,DB_TABLE_NAME_NOTE_TYPE+"=?",
+                new String[]{typeName});
+        return result;
+    }
+
    public int deleteType(String typeName){
        int result = 0;
        result = mSqLiteDatabase.delete(DB_TABLE_NAME_ONE,DB_TABLE_NAME_NOTE_TYPE+"=?",
                new String[]{typeName});
        return result;
    }
+
+
 
 }

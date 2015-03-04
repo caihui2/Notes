@@ -22,6 +22,7 @@ public class SelectNoteTypeAdapter extends BaseAdapter {
     private List<String> mStringList;
     private LayoutInflater mInflater;
     private int sPosition;
+    private boolean vState = false;
 
     public SelectNoteTypeAdapter(Context context , List<String> mStringList){
         this.context = context;
@@ -33,6 +34,7 @@ public class SelectNoteTypeAdapter extends BaseAdapter {
     public void setSPosition(int sPosition){
         this.sPosition = sPosition;
     }
+    public void setVState(boolean vState){ this.vState = vState; }
 
     @Override
     public int getCount() {
@@ -65,7 +67,7 @@ public class SelectNoteTypeAdapter extends BaseAdapter {
         }
         String str = (String)getItem(position);
         mViewHandler.teType.setText(str);
-        if(sPosition == position){
+        if(sPosition == position && vState){
             mViewHandler.imSelectType.setVisibility(View.VISIBLE);
         }else{
             mViewHandler.imSelectType.setVisibility(View.GONE);

@@ -3,6 +3,7 @@ package com.netos.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class SelectNoteTypeActivity extends Activity {
     DBUrils mDbUrils;
     List<String> tpList;
     SelectNoteTypeAdapter adapter;
+    public static final String TYPE_NAME = "type_name";
 
 
     @Override
@@ -46,7 +48,7 @@ public class SelectNoteTypeActivity extends Activity {
     }
 
     public void closeWindow(View view) {
-        //TODO
+        Toast.makeText(SelectNoteTypeActivity.this,"未选择类型",Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -66,7 +68,15 @@ public class SelectNoteTypeActivity extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     adapter.setSPosition(position);
+                    adapter.setVState(true);
                     adapter.notifyDataSetChanged();
+                    String typeName = (String)adapter.getItem(position);
+                    Intent mIntent = getIntent();
+                    mIntent.putExtra(TYPE_NAME,typeName);
+                    setResult(RESULT_OK,mIntent);
+                    Toast.makeText(SelectNoteTypeActivity.this,"笔记类型："+typeName,Toast.LENGTH_SHORT)
+                            .show();
+                    finish();
                 }
             });
         }
@@ -107,6 +117,7 @@ public class SelectNoteTypeActivity extends Activity {
                           }
                        }else{
                            //TODO
+                           showDtDialog(nameType);
                        }
 
                         break;
@@ -114,6 +125,7 @@ public class SelectNoteTypeActivity extends Activity {
                 return false;
             }
         });
+
     }
 
     //增加类型
@@ -126,9 +138,16 @@ public class SelectNoteTypeActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String tStr = mEditText.getText().toString().trim();
-                long connt = mDbUrils.addType(tStr);
-                tpList.add(tStr);
-                adapter.notifyDataSetChanged();
+                String result = mDbUrils.queryTypeItem(tStr);
+                if(result == null) {
+                     long connt = mDbUrils.addType(tStr);
+                    System.out.println(connt+"======");
+                     tpList.add(tStr);
+                     adapter.notifyDataSetChanged();
+                }else{
+                    Toast.makeText(SelectNoteTypeActivity.this,"类型已存在",Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
         mBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -138,6 +157,31 @@ public class SelectNoteTypeActivity extends Activity {
             }
         });
         mBuilder.show();
+    }
+
+    public void showDtDialog(final String typeName){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        mBuilder.setTitle("提示");
+        mBuilder.setMessage("是没删除此类型中的笔记？");
+        mBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               int result = mDbUrils.deleteTypeNote(typeName);
+               if(result <= 0){
+                   Toast.makeText(SelectNoteTypeActivity.this,"删除成功",Toast.LENGTH_SHORT).show();
+               }else{
+                   Toast.makeText(SelectNoteTypeActivity.this,"删除失败，请重新删除",
+                           Toast.LENGTH_SHORT).show();
+               }
+            }
+        });
+       mBuilder.setNegativeButton("取消",new DialogInterface.OnClickListener() {
+           @Override
+           public void onClick(DialogInterface dialog, int which) {
+                  //TODO
+           }
+       });
+
     }
 
     private int dp2px(int dp){

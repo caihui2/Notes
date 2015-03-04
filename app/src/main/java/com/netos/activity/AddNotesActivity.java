@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 public class AddNotesActivity extends Activity implements View.OnClickListener {
 
     private static final int REQUESTCODE = 1;
+    String typeName ;
     ImageButton imHandwriting, imGallery, imCamera, imRecord, imTodo2, imMore;
     EditText edTItlle,edContent;
 
@@ -59,12 +60,11 @@ public class AddNotesActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+     if(requestCode == REQUESTCODE && resultCode == RESULT_OK){
+         typeName = data.getStringExtra(SelectNoteTypeActivity.TYPE_NAME);
+         System.out.println(typeName+"======");
+     }
     }
 }
