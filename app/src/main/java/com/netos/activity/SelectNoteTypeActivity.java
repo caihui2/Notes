@@ -141,7 +141,6 @@ public class SelectNoteTypeActivity extends Activity {
                 String result = mDbUrils.queryTypeItem(tStr);
                 if(result == null) {
                      long connt = mDbUrils.addType(tStr);
-                    System.out.println(connt+"======");
                      tpList.add(tStr);
                      adapter.notifyDataSetChanged();
                 }else{
@@ -162,7 +161,7 @@ public class SelectNoteTypeActivity extends Activity {
     public void showDtDialog(final String typeName){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         mBuilder.setTitle("提示");
-        mBuilder.setMessage("是没删除此类型中的笔记？");
+        mBuilder.setMessage("是否删除此类型中的笔记？");
         mBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -179,6 +178,7 @@ public class SelectNoteTypeActivity extends Activity {
            @Override
            public void onClick(DialogInterface dialog, int which) {
                   //TODO
+
            }
        });
 

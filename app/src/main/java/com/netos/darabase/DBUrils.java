@@ -38,14 +38,16 @@ public class DBUrils {
     /**
      * sql add
      */
-    public void add(NotesObjInfo mNotesObjInfo){
+    public long add(NotesObjInfo mNotesObjInfo){
         ContentValues values = new ContentValues();
         values.put(DB_TABLE_NAME_TITLE,mNotesObjInfo.getTitle());
         values.put(DB_TABLE_NAME_CONTENT,mNotesObjInfo.getContent());
         values.put(DB_TABLE_NAME_TIME,mNotesObjInfo.getTime());
         values.put(DB_TABLE_NAME_COLLECTION,mNotesObjInfo.getCollection());
-        mSqLiteDatabase.insert(DB_TABLE_NAME, null, values);
+        values.put(DB_TABLE_NAME_NOTE_TYPE,mNotesObjInfo.getTypeName());
+       long result =  mSqLiteDatabase.insert(DB_TABLE_NAME, null, values);
         mSqLiteDatabase.close();
+        return result;
     }
 
     public long addType(String typeName){
@@ -67,8 +69,9 @@ public class DBUrils {
              String title = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_TITLE));
              String content = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_CONTENT));
              String time = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_TIME));
+             String typeName = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_NOTE_TYPE));
              int collection = mCursor.getInt(mCursor.getColumnIndex(DB_TABLE_NAME_COLLECTION));
-             mNotesObjInfoList.add(new NotesObjInfo(title,content,time,collection));
+             mNotesObjInfoList.add(new NotesObjInfo(title,content,time,typeName,collection));
             }
         }
         mCursor.close();
@@ -102,8 +105,9 @@ public class DBUrils {
                 String title = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_TITLE));
                 String content = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_CONTENT));
                 String time = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_TIME));
+                String type = mCursor.getString(mCursor.getColumnIndex(DB_TABLE_NAME_NOTE_TYPE));
                 int collection = mCursor.getInt(mCursor.getColumnIndex(DB_TABLE_NAME_COLLECTION));
-                mNotesObjInfoList.add(new NotesObjInfo(title,content,time,collection));
+                mNotesObjInfoList.add(new NotesObjInfo(title,content,time,type,collection));
             }
         }
         return mNotesObjInfoList;

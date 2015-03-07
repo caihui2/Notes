@@ -8,17 +8,27 @@ public class NotesObjInfo {
     private String title;
     private String content;
     private String time;
+    private String typeName;
+
+
+
     private int collection;
 
 
-    public NotesObjInfo() {
+    public NotesObjInfo(String content, String title, String time, String typeName, int collection) {
+        this.content = content;
+        this.title = title;
+        this.time = time;
+        this.typeName = typeName;
+        this.collection = collection;
     }
 
-    public NotesObjInfo(String title, String content, String time, int collection) {
-        this.title = title;
-        this.content = content;
-        this.time = time;
-        this.collection = collection;
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
 
