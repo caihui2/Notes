@@ -35,7 +35,6 @@ public class SelectNoteTypeActivity extends Activity {
     SelectNoteTypeAdapter adapter;
     public static final String TYPE_NAME = "type_name";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,16 +111,17 @@ public class SelectNoteTypeActivity extends Activity {
                             } else {
                                 tpList.remove(position);
                                 adapter.notifyDataSetChanged();
-                                Toast.makeText(SelectNoteTypeActivity.this, "此类型已删除",
-                                        Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            //TODO
                             showDtDialog(nameType);
-                            tpList.remove(position);
-                            adapter.notifyDataSetChanged();
-                            Toast.makeText(SelectNoteTypeActivity.this, "此类型已删除",
-                                    Toast.LENGTH_SHORT).show();
+                            int DResult = mDbUrils.deleteType(nameType);
+                            if (DResult <= 0) {
+                                Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                tpList.remove(position);
+                                adapter.notifyDataSetChanged();
+                            }
                         }
 
                         break;
@@ -145,8 +145,10 @@ public class SelectNoteTypeActivity extends Activity {
                 String result = mDbUrils.queryTypeItem(tStr);
                 if (result == null) {
                     long connt = mDbUrils.addType(tStr);
-                    tpList.add(tStr);
-                    adapter.notifyDataSetChanged();
+                    if (connt > 0) {
+                        tpList.add(tStr);
+                        adapter.notifyDataSetChanged();
+                    }
                 } else {
                     Toast.makeText(SelectNoteTypeActivity.this, "类型已存在", Toast.LENGTH_SHORT)
                             .show();
@@ -171,10 +173,7 @@ public class SelectNoteTypeActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 int result = mDbUrils.deleteTypeNote(typeName);
                 if (result <= 0) {
-                    Toast.makeText(SelectNoteTypeActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectNoteTypeActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -184,8 +183,10 @@ public class SelectNoteTypeActivity extends Activity {
                 dialog.dismiss();
             }
         });
+        mBuilder.show();
 
     }
+
 
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,

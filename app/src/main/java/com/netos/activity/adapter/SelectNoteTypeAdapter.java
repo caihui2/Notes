@@ -1,6 +1,9 @@
 package com.netos.activity.adapter;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.netos.activity.R;
+import com.netos.activity.SelectNoteTypeActivity;
 import com.netos.darabase.DBUrils;
 
 import java.util.List;
@@ -28,8 +32,9 @@ public class SelectNoteTypeAdapter extends BaseAdapter {
         this.context = context;
         this.mStringList = mStringList;
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
+
+
 
     public void setSPosition(int sPosition){
         this.sPosition = sPosition;
@@ -79,4 +84,6 @@ public class SelectNoteTypeAdapter extends BaseAdapter {
        TextView  teType;
        ImageView imSelectType;
    }
+
+
 }

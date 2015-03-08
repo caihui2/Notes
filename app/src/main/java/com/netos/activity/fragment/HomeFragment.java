@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     Context mActivity;
     ListView lvNotes;
     ImageView imAddNOtes;
+
     List<NotesObjInfo> mNotesObjInfoList;
     NotesDataAdapter noteAdapter;
     SpinnerDataAdapter adapter;
@@ -58,41 +59,41 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         imAddNOtes.setOnClickListener(this);
     }
 
-    void showTypeData(){
+    void showTypeData() {
         mNotesObjInfoList = mDbUrils.querys();
         if (mNotesObjInfoList != null) {
             noteAdapter = new NotesDataAdapter(mActivity, mNotesObjInfoList);
             lvNotes.setAdapter(noteAdapter);
         }
-          adapter = new SpinnerDataAdapter(mActivity,mDbUrils);
+        adapter = new SpinnerDataAdapter(mActivity, mDbUrils);
         boolean dataState = adapter.listState();
-        if(dataState) {
+        if (dataState) {
             spTitle.setAdapter(adapter);
         }
-       spTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-              String type = (String)adapter.getItem(position);
-              if(type.equals("全部笔记")){
-                  mNotesObjInfoList = mDbUrils.querys();
-                  noteAdapter.setList(mNotesObjInfoList);
-              }else{
-                  if(type != null){
-                    mNotesObjInfoList =  mDbUrils.querysTypeObjCount(type);
-                      if(mNotesObjInfoList != null){
-                           noteAdapter.setList(mNotesObjInfoList);
-                      }else{
-                          lvNotes.setAdapter(null);
-                      }
-                  }
-              }
-           }
+        spTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String type = (String) adapter.getItem(position);
+                if (type.equals("全部笔记")) {
+                    mNotesObjInfoList = mDbUrils.querys();
+                    noteAdapter.setList(mNotesObjInfoList);
+                } else {
+                    if (type != null) {
+                        mNotesObjInfoList = mDbUrils.querysTypeObjCount(type);
+                        if (mNotesObjInfoList != null) {
+                            noteAdapter.setList(mNotesObjInfoList);
+                        } else {
+                            lvNotes.setAdapter(null);
+                        }
+                    }
+                }
+            }
 
-           @Override
-           public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-           }
-       });
+            }
+        });
     }
 
     @Override
