@@ -24,9 +24,10 @@
     <TextView
         android:id="@+id/tv_menu_item_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dip"
         android:layout_toRightOf="@id/im_menu_icon"
         android:layout_centerVertical="true"
+        android:gravity="center"
         android:layout_marginLeft="20dip"
         android:textSize="15sp"
         android:textColor="@android:color/black"

@@ -1,9 +1,14 @@
 package com.notos.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by chyang on 15-2-25.
  */
-public class NotesObjInfo {
+public class NotesObjInfo implements Serializable{
 
     private String title;
     private String content;
@@ -74,4 +79,5 @@ public class NotesObjInfo {
                 ", collection='" + collection + '\'' +
                 '}';
     }
+
 }

@@ -21,6 +21,7 @@ import java.util.Date;
 public class AddNotesActivity extends Activity implements View.OnClickListener {
 
     private static final int REQUESTCODE = 1;
+    public static final String ADDRESULT = "addResult";
     String typeName = "全部笔记";
     ImageButton imHandwriting, imGallery, imCamera, imRecord, imTodo2, imMore;
     EditText edTItlle,edContent;
@@ -84,8 +85,13 @@ public class AddNotesActivity extends Activity implements View.OnClickListener {
             SimpleDateFormat format = new SimpleDateFormat("yyyy年mm月dd日 HH:mm");
             String time = format.format(new Date(System.currentTimeMillis()));
             NotesObjInfo mNotesObjInfo = new NotesObjInfo(title,content,time,typeName,0);
-            long result = mDbUrils.add(mNotesObjInfo);
+            long result = mDbUrils.addNs(mNotesObjInfo);
             if(result > 0){
+                Intent mIntent = getIntent();
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable(ADDRESULT,mNotesObjInfo);
+                mIntent.putExtras(mBundle);
+                setResult(RESULT_OK,mIntent);
                 Toast.makeText(this,"保存成功",Toast.LENGTH_SHORT).show();
                 finish();
             }else{

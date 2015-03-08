@@ -48,7 +48,7 @@ public class SelectNoteTypeActivity extends Activity {
     }
 
     public void closeWindow(View view) {
-        Toast.makeText(SelectNoteTypeActivity.this,"未选择类型",Toast.LENGTH_SHORT).show();
+        Toast.makeText(SelectNoteTypeActivity.this, "未选择类型", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -70,11 +70,11 @@ public class SelectNoteTypeActivity extends Activity {
                     adapter.setSPosition(position);
                     adapter.setVState(true);
                     adapter.notifyDataSetChanged();
-                    String typeName = (String)adapter.getItem(position);
+                    String typeName = (String) adapter.getItem(position);
                     Intent mIntent = getIntent();
-                    mIntent.putExtra(TYPE_NAME,typeName);
-                    setResult(RESULT_OK,mIntent);
-                    Toast.makeText(SelectNoteTypeActivity.this,"笔记类型："+typeName,Toast.LENGTH_SHORT)
+                    mIntent.putExtra(TYPE_NAME, typeName);
+                    setResult(RESULT_OK, mIntent);
+                    Toast.makeText(SelectNoteTypeActivity.this, "笔记类型：" + typeName, Toast.LENGTH_SHORT)
                             .show();
                     finish();
                 }
@@ -86,7 +86,7 @@ public class SelectNoteTypeActivity extends Activity {
             @Override
             public void create(SwipeMenu menu) {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,0x3F, 0x25)));
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
                 deleteItem.setWidth(dp2px(90));
                 deleteItem.setIcon(R.drawable.ic_delete);
                 menu.addMenuItem(deleteItem);
@@ -99,26 +99,30 @@ public class SelectNoteTypeActivity extends Activity {
         lvSelectType.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                switch (index){
+                switch (index) {
                     case 0:
-                       String  nameType = (String)adapter.getItem(position);
-                       List<NotesObjInfo> mInfoList = mDbUrils.querysTypeObjCount(nameType);
-                       mInfoList.size();
-                       if(mInfoList.size() <= 0){
-                          int DResult = mDbUrils.deleteType(nameType);
-                          if(DResult <= 0){
-                              Toast.makeText(SelectNoteTypeActivity.this,"删除失败，请重新删除",
-                                      Toast.LENGTH_SHORT).show();
-                          }else {
-                              tpList.remove(position);
-                              adapter.notifyDataSetChanged();
-                              Toast.makeText(SelectNoteTypeActivity.this,"删除成功",
-                                      Toast.LENGTH_SHORT).show();
-                          }
-                       }else{
-                           //TODO
-                           showDtDialog(nameType);
-                       }
+                        String nameType = (String) adapter.getItem(position);
+                        List<NotesObjInfo> mInfoList = mDbUrils.querysTypeObjCount(nameType);
+                        mInfoList.size();
+                        if (mInfoList.size() <= 0) {
+                            int DResult = mDbUrils.deleteType(nameType);
+                            if (DResult <= 0) {
+                                Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                tpList.remove(position);
+                                adapter.notifyDataSetChanged();
+                                Toast.makeText(SelectNoteTypeActivity.this, "此类型已删除",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            //TODO
+                            showDtDialog(nameType);
+                            tpList.remove(position);
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(SelectNoteTypeActivity.this, "此类型已删除",
+                                    Toast.LENGTH_SHORT).show();
+                        }
 
                         break;
                 }
@@ -139,12 +143,12 @@ public class SelectNoteTypeActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 String tStr = mEditText.getText().toString().trim();
                 String result = mDbUrils.queryTypeItem(tStr);
-                if(result == null) {
-                     long connt = mDbUrils.addType(tStr);
-                     tpList.add(tStr);
-                     adapter.notifyDataSetChanged();
-                }else{
-                    Toast.makeText(SelectNoteTypeActivity.this,"类型已存在",Toast.LENGTH_SHORT)
+                if (result == null) {
+                    long connt = mDbUrils.addType(tStr);
+                    tpList.add(tStr);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(SelectNoteTypeActivity.this, "类型已存在", Toast.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -158,33 +162,32 @@ public class SelectNoteTypeActivity extends Activity {
         mBuilder.show();
     }
 
-    public void showDtDialog(final String typeName){
+    public void showDtDialog(final String typeName) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         mBuilder.setTitle("提示");
         mBuilder.setMessage("是否删除此类型中的笔记？");
-        mBuilder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+        mBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               int result = mDbUrils.deleteTypeNote(typeName);
-               if(result <= 0){
-                   Toast.makeText(SelectNoteTypeActivity.this,"删除成功",Toast.LENGTH_SHORT).show();
-               }else{
-                   Toast.makeText(SelectNoteTypeActivity.this,"删除失败，请重新删除",
-                           Toast.LENGTH_SHORT).show();
-               }
+                int result = mDbUrils.deleteTypeNote(typeName);
+                if (result <= 0) {
+                    Toast.makeText(SelectNoteTypeActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
-       mBuilder.setNegativeButton("取消",new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-                  //TODO
-
-           }
-       });
+        mBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
     }
 
-    private int dp2px(int dp){
+    private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());
     }

@@ -21,10 +21,16 @@ public class NotesDataAdapter extends BaseAdapter {
     private Context context;
     private List<NotesObjInfo> mList;
     private LayoutInflater mInflater;
-    public NotesDataAdapter (Context context,List<NotesObjInfo> mList){
+
+    public NotesDataAdapter(Context context, List<NotesObjInfo> mList) {
         this.context = context;
         this.mList = mList;
-        mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void setList(List<NotesObjInfo> mList){
+        this.mList = mList;
+        notifyDataSetChanged();
     }
 
 
@@ -47,25 +53,25 @@ public class NotesDataAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHandler mViewHandler = null;
-        if(convertView == null){
+        if (convertView == null) {
             mViewHandler = new ViewHandler();
-            convertView = mInflater.inflate(R.layout.nli_notes_list_item,null);
-            mViewHandler.teTitle = (TextView)convertView.findViewById(R.id.te_title);
-            mViewHandler.teTime = (TextView)convertView.findViewById(R.id.te_time);
-            mViewHandler.teContent = (TextView)convertView.findViewById(R.id.te_content);
+            convertView = mInflater.inflate(R.layout.nli_notes_list_item, null);
+            mViewHandler.teTitle = (TextView) convertView.findViewById(R.id.te_title);
+            mViewHandler.teTime = (TextView) convertView.findViewById(R.id.te_time);
+            mViewHandler.teContent = (TextView) convertView.findViewById(R.id.te_content);
 
             convertView.setTag(mViewHandler);
-        }else{
-            mViewHandler = (ViewHandler)convertView.getTag();
+        } else {
+            mViewHandler = (ViewHandler) convertView.getTag();
         }
-        NotesObjInfo mNotesObjInfo = (NotesObjInfo)getItem(position);
+        NotesObjInfo mNotesObjInfo = (NotesObjInfo) getItem(position);
         mViewHandler.teTitle.setText(mNotesObjInfo.getTitle());
         mViewHandler.teTime.setText(mNotesObjInfo.getTime());
         mViewHandler.teContent.setText(mNotesObjInfo.getContent());
         return convertView;
     }
 
-    private class   ViewHandler{
+    private class ViewHandler {
         TextView teTitle;
         TextView teTime;
         TextView teContent;
