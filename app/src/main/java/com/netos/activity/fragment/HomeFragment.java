@@ -60,11 +60,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     void showTypeData() {
-        mNotesObjInfoList = mDbUrils.querys();
-        if (mNotesObjInfoList != null) {
-            noteAdapter = new NotesDataAdapter(mActivity, mNotesObjInfoList);
-            lvNotes.setAdapter(noteAdapter);
-        }
+        noteAdapter = new NotesDataAdapter(mActivity);
         adapter = new SpinnerDataAdapter(mActivity, mDbUrils);
         boolean dataState = adapter.listState();
         if (dataState) {
@@ -77,6 +73,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (type.equals("全部笔记")) {
                     mNotesObjInfoList = mDbUrils.querys();
                     noteAdapter.setList(mNotesObjInfoList);
+                    if(mNotesObjInfoList != null){
+                        lvNotes.setAdapter(noteAdapter);
+                    }
                 } else {
                     if (type != null) {
                         mNotesObjInfoList = mDbUrils.querysTypeObjCount(type);
@@ -90,9 +89,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 

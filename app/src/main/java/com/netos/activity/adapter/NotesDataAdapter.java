@@ -22,9 +22,8 @@ public class NotesDataAdapter extends BaseAdapter {
     private List<NotesObjInfo> mList;
     private LayoutInflater mInflater;
 
-    public NotesDataAdapter(Context context, List<NotesObjInfo> mList) {
+    public NotesDataAdapter(Context context) {
         this.context = context;
-        this.mList = mList;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
