@@ -34,6 +34,12 @@ public class SelectNoteTypeActivity extends Activity {
     List<String> tpList;
     SelectNoteTypeAdapter adapter;
     public static final String TYPE_NAME = "type_name";
+    public static final String ACTION_DT = "action_dt";
+    public static final String DT_KEY_TYPE = "dt_key_type";
+
+    public static final String ACTION_AD = "action_ad";
+    public static final String AD_KEY_TYPE = "ad_key_type";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +115,7 @@ public class SelectNoteTypeActivity extends Activity {
                                 Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
                                         Toast.LENGTH_SHORT).show();
                             } else {
+                                sendData(ACTION_DT,DT_KEY_TYPE,nameType);
                                 tpList.remove(position);
                                 adapter.notifyDataSetChanged();
                             }
@@ -119,6 +126,7 @@ public class SelectNoteTypeActivity extends Activity {
                                 Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
                                         Toast.LENGTH_SHORT).show();
                             } else {
+                                sendData(ACTION_DT,DT_KEY_TYPE,nameType);
                                 tpList.remove(position);
                                 adapter.notifyDataSetChanged();
                             }
@@ -146,6 +154,7 @@ public class SelectNoteTypeActivity extends Activity {
                 if (result == null) {
                     long connt = mDbUrils.addType(tStr);
                     if (connt > 0) {
+                        sendData(ACTION_AD,AD_KEY_TYPE,tStr);
                         tpList.add(tStr);
                         adapter.notifyDataSetChanged();
                     }
@@ -185,6 +194,13 @@ public class SelectNoteTypeActivity extends Activity {
         });
         mBuilder.show();
 
+    }
+
+    public void sendData(String action,String key,String type){
+        Intent mIntent = new Intent();
+        mIntent.setAction(action);
+        mIntent.putExtra(key,type);
+        sendBroadcast(mIntent);
     }
 
 

@@ -1,6 +1,9 @@
 package com.netos.activity.adapter;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.netos.activity.R;
+import com.netos.activity.SelectNoteTypeActivity;
 import com.netos.darabase.DBUrils;
 
 import java.util.ArrayList;
@@ -26,12 +30,20 @@ public class SpinnerDataAdapter extends BaseAdapter{
          mInflater = LayoutInflater.from(mContext);
          mList = new ArrayList<String>();
         mList.add("全部笔记");
+        setReceive();
         List<String> oldL = mDbUrils.querysType();
         if(mList != null){
             for(String str : oldL){
                  mList.add(str);
             }
         }
+    }
+
+    public void setReceive(){
+        IntentFilter dtFilter = new IntentFilter(SelectNoteTypeActivity.ACTION_DT);
+        mContext.registerReceiver(new SignalData(),dtFilter);
+        IntentFilter adFilter = new IntentFilter(SelectNoteTypeActivity.ACTION_AD);
+        mContext.registerReceiver(new SignalData(),adFilter);
     }
 
     public boolean listState(){
@@ -83,5 +95,20 @@ public class SpinnerDataAdapter extends BaseAdapter{
     }
     private class ViewHandler{
         private TextView teSp;
+    }
+
+    class SignalData extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals(SelectNoteTypeActivity.ACTION_DT)){
+               String type = intent.getStringExtra(SelectNoteTypeActivity.DT_KEY_TYPE);
+                mList.remove(type);
+            }
+            else if(action.equals(SelectNoteTypeActivity.ACTION_AD)){
+                String type = intent.getStringExtra(SelectNoteTypeActivity.AD_KEY_TYPE);
+                mList.add(type);
+            }
+        }
     }
 }

@@ -112,6 +112,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (mNotesObjInfo != null) {
                 mNotesObjInfoList.add(mNotesObjInfo);
                 noteAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
 
         }
