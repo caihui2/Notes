@@ -20,6 +20,7 @@ import com.netos.activity.adapter.SpinnerDataAdapter;
 import com.netos.darabase.DBUrils;
 import com.notos.entity.NotesObjInfo;
 
+import java.text.Normalizer;
 import java.util.List;
 
 /**
@@ -27,6 +28,10 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private static final int RESQUESTCODE = 1;
+    public static final String ACTION_ALTER_DATA = "action_alter_data";
+    public static final String ALTER_ID = "alter_id";
+    public static final String ALTER_NOTE_OBJ = "alter_note_obj";
+    public static final  int  ALTERRESULTCODE = 2;
     View rootView;
     Spinner spTitle;
     Context mActivity;
@@ -54,6 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         spTitle = (Spinner) rootView.findViewById(R.id.sp_title);
         lvNotes = (ListView) rootView.findViewById(R.id.lv_notes);
         showTypeData();
+        lvOnitemClick();
 
         imAddNOtes = (ImageView) rootView.findViewById(R.id.im_addNote);
         imAddNOtes.setOnClickListener(this);
@@ -93,6 +99,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    void lvOnitemClick(){
+        lvNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NotesObjInfo mNotesObjInfo = mNotesObjInfoList.get(position);
+                int noteId = mDbUrils.querysId(mNotesObjInfo.getTitle());
+                System.out.println(noteId+"======");
+                Intent alIntent = new Intent();
+                alIntent.setAction(ACTION_ALTER_DATA);
+                alIntent.addCategory(Intent.CATEGORY_DEFAULT);
+                alIntent.putExtra(ALTER_ID, noteId);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable(ALTER_NOTE_OBJ,mNotesObjInfo);
+                alIntent.putExtras(mBundle);
+               startActivityForResult(alIntent, ALTERRESULTCODE);
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -114,6 +139,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 noteAdapter.notifyDataSetChanged();
                 adapter.notifyDataSetChanged();
             }
+            //TODO
+         if(requestCode == ALTERRESULTCODE && requestCode == Activity.RESULT_OK){
+             mNotesObjInfoList = mDbUrils.querys();
+             if(mNotesObjInfo!= null){
+                 noteAdapter.setList(mNotesObjInfoList);
+             }
+
+         }
 
         }
 

@@ -20,6 +20,10 @@
         <activity
             android:name=".AddNotesActivity"
             android:label="@string/title_activity_add_notes" >
+            <intent-filter>
+                <action android:name="action_alter_data"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SelectNoteTypeActivity"

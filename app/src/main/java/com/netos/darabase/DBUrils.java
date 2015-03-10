@@ -64,6 +64,18 @@ public class DBUrils {
         return result;
     }
 
+    public int alterNote(int id ,NotesObjInfo mNotesObjInfo){
+        int result = 0;
+        ContentValues values = new ContentValues();
+        values.put(DB_FD_NAME_TITLE,mNotesObjInfo.getTitle());
+        values.put(DB_FD_NAME_CONTENT,mNotesObjInfo.getContent());
+        values.put(DB_FD_NAME_TIME,mNotesObjInfo.getTime());
+        values.put(DB_FD_NAME_COLLECTION,mNotesObjInfo.getCollection());
+        values.put(DB_FD_NAME_NOTE_TYPE,mNotesObjInfo.getTypeName());
+       result = mSqLiteDatabase.update(DB_TABLE_NOTES,values,"_id=?",new String[]{id+""});
+        return result;
+    }
+
     /**
      *@table notes
      * @return NotesObjInfo List
@@ -83,6 +95,18 @@ public class DBUrils {
         }
         mCursor.close();
         return mNotesObjInfoList;
+    }
+
+    public int querysId(String title){
+       int result = 0;
+       Cursor mCursor = mSqLiteDatabase.query(DB_TABLE_NOTES,new String[]{"_id"},
+               DB_FD_NAME_TITLE+"=?",new String[]{title},null,null,null);
+       if(mCursor != null){
+          if(mCursor.moveToNext()){
+              result = mCursor.getInt(mCursor.getColumnIndex("_id"));
+          }
+       }
+        return result;
     }
 
     /**
