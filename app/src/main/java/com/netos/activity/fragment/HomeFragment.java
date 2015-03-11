@@ -76,27 +76,36 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String type = (String) adapter.getItem(position);
-                if (type.equals("全部笔记")) {
-                    mNotesObjInfoList = mDbUrils.querys();
-                    noteAdapter.setList(mNotesObjInfoList);
-                    if(mNotesObjInfoList != null){
-                        lvNotes.setAdapter(noteAdapter);
-                    }
-                } else {
-                    if (type != null) {
-                        mNotesObjInfoList = mDbUrils.querysTypeObjCount(type);
-                        if (mNotesObjInfoList != null) {
-                            noteAdapter.setList(mNotesObjInfoList);
-                        } else {
-                            lvNotes.setAdapter(null);
-                        }
-                    }
-                }
+               lvShowState(type);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
+    }
+
+    public void lvShowState(String type){
+        lvNotes.setAdapter(null);
+        if (type.equals("全部笔记")) {
+            mNotesObjInfoList = mDbUrils.querys();
+            if(mNotesObjInfoList != null){
+                noteAdapter = new NotesDataAdapter(mActivity);
+                noteAdapter.setList(mNotesObjInfoList);
+                lvNotes.setAdapter(noteAdapter);
+            }
+        } else {
+            if (type != null) {
+                mNotesObjInfoList = mDbUrils.querysTypeObjCount(type);
+                if (mNotesObjInfoList != null) {
+                    noteAdapter = new NotesDataAdapter(mActivity);
+                    noteAdapter.setList(mNotesObjInfoList);
+                    lvNotes.setAdapter(noteAdapter);
+
+                } else {
+                    lvNotes.setAdapter(null);
+                }
+            }
+        }
     }
 
     void lvOnitemClick(){
@@ -105,7 +114,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NotesObjInfo mNotesObjInfo = mNotesObjInfoList.get(position);
                 int noteId = mDbUrils.querysId(mNotesObjInfo.getTitle());
-                System.out.println(noteId+"======");
                 Intent alIntent = new Intent();
                 alIntent.setAction(ACTION_ALTER_DATA);
                 alIntent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -135,17 +143,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (requestCode == RESQUESTCODE && resultCode == Activity.RESULT_OK) {
             NotesObjInfo mNotesObjInfo = (NotesObjInfo) data.getSerializableExtra(AddNotesActivity.ADDRESULT);
             if (mNotesObjInfo != null) {
-                mNotesObjInfoList.add(mNotesObjInfo);
-                noteAdapter.notifyDataSetChanged();
+                lvShowState("全部笔记");
                 adapter.notifyDataSetChanged();
             }
             //TODO
          if(requestCode == ALTERRESULTCODE && requestCode == Activity.RESULT_OK){
-             mNotesObjInfoList = mDbUrils.querys();
-             if(mNotesObjInfo!= null){
-                 noteAdapter.setList(mNotesObjInfoList);
-             }
-
+            lvShowState("全部笔记");
+             adapter.notifyDataSetChanged();
          }
 
         }

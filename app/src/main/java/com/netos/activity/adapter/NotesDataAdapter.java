@@ -29,7 +29,6 @@ public class NotesDataAdapter extends BaseAdapter {
 
     public void setList(List<NotesObjInfo> mList){
         this.mList = mList;
-        notifyDataSetChanged();
     }
 
 

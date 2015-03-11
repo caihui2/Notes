@@ -65,7 +65,7 @@ public class DBUrils {
     }
 
     public int alterNote(int id ,NotesObjInfo mNotesObjInfo){
-        int result = 0;
+        int result = 100000000;
         ContentValues values = new ContentValues();
         values.put(DB_FD_NAME_TITLE,mNotesObjInfo.getTitle());
         values.put(DB_FD_NAME_CONTENT,mNotesObjInfo.getContent());
@@ -90,7 +90,7 @@ public class DBUrils {
              String time = mCursor.getString(mCursor.getColumnIndex(DB_FD_NAME_TIME));
              String typeName = mCursor.getString(mCursor.getColumnIndex(DB_FD_NAME_NOTE_TYPE));
              int collection = mCursor.getInt(mCursor.getColumnIndex(DB_FD_NAME_COLLECTION));
-             mNotesObjInfoList.add(new NotesObjInfo(title,content,time,typeName,collection));
+             mNotesObjInfoList.add(new NotesObjInfo(content,title,time,typeName,collection));
             }
         }
         mCursor.close();
@@ -98,7 +98,7 @@ public class DBUrils {
     }
 
     public int querysId(String title){
-       int result = 0;
+       int result = -1;
        Cursor mCursor = mSqLiteDatabase.query(DB_TABLE_NOTES,new String[]{"_id"},
                DB_FD_NAME_TITLE+"=?",new String[]{title},null,null,null);
        if(mCursor != null){
@@ -123,7 +123,6 @@ public class DBUrils {
                result = mCursor.getString(mCursor.getColumnIndex(DB_FD_NAME_NOTE_TYPE));
             }
         }
-
         return result;
     }
 
