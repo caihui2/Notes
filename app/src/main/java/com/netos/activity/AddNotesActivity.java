@@ -103,34 +103,34 @@ public class AddNotesActivity extends Activity implements View.OnClickListener {
                 if (result > 0) {
                     Intent mIntent = getIntent();
                     setResult(RESULT_OK, mIntent);
-                    Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
                     finish();
-                    return ;
                 } else {
                     Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
                 }
 
             }
-        }
-        if (TextUtils.isEmpty(title) && TextUtils.isEmpty(content)) {
-            finish();
-        } else {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy年mm月dd日 HH:mm");
-            String time = format.format(new Date(System.currentTimeMillis()));
-            NotesObjInfo mNotesObjInfo = new NotesObjInfo(content, title, time, typeName, 0);
-            long result = mDbUrils.addNs(mNotesObjInfo);
-            if (result > 0) {
-                Intent mIntent = getIntent();
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable(ADDRESULT, mNotesObjInfo);
-                mIntent.putExtras(mBundle);
-                setResult(RESULT_OK, mIntent);
-                Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+        }else {
+            if (TextUtils.isEmpty(title) && TextUtils.isEmpty(content)) {
                 finish();
             } else {
-                Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
-            }
+                SimpleDateFormat format = new SimpleDateFormat("yyyy年mm月dd日 HH:mm");
+                String time = format.format(new Date(System.currentTimeMillis()));
+                NotesObjInfo mNotesObjInfo = new NotesObjInfo(content, title, time, typeName, 0);
+                long result = mDbUrils.addNs(mNotesObjInfo);
+                if (result > 0) {
+                    Intent mIntent = getIntent();
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable(ADDRESULT, mNotesObjInfo);
+                    mIntent.putExtras(mBundle);
+                    setResult(RESULT_OK, mIntent);
+                    Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
+                }
 
+            }
         }
     }
 

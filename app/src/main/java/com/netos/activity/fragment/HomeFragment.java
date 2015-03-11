@@ -86,6 +86,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public void lvShowState(String type){
         lvNotes.setAdapter(null);
+        mNotesObjInfoList = null;
         if (type.equals("全部笔记")) {
             mNotesObjInfoList = mDbUrils.querys();
             if(mNotesObjInfoList != null){
@@ -144,16 +145,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             NotesObjInfo mNotesObjInfo = (NotesObjInfo) data.getSerializableExtra(AddNotesActivity.ADDRESULT);
             if (mNotesObjInfo != null) {
                 lvShowState("全部笔记");
-                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetInvalidated();
             }
             //TODO
-         if(requestCode == ALTERRESULTCODE && requestCode == Activity.RESULT_OK){
-            lvShowState("全部笔记");
-             adapter.notifyDataSetChanged();
+         if(requestCode == ALTERRESULTCODE && requestCode == Activity.RESULT_OK) {
+             lvShowState("全部笔记");
+             adapter.notifyDataSetInvalidated();
          }
-
         }
-
-
     }
 }
