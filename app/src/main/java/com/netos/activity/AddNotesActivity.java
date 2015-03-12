@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.netos.activity.fragment.HomeFragment;
-import com.netos.darabase.DBUrils;
+import com.netos.darabase.DBUtils;
 import com.notos.entity.NotesObjInfo;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +26,7 @@ public class AddNotesActivity extends Activity implements View.OnClickListener {
     String typeName = "全部笔记";
     ImageButton imHandwriting, imGallery, imCamera, imRecord, imTodo2, imMore;
     EditText edTItlle, edContent;
-    DBUrils mDbUrils;
+    DBUtils mDbUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +59,12 @@ public class AddNotesActivity extends Activity implements View.OnClickListener {
 
         edContent = (EditText) findViewById(R.id.ed_content);
 
-        mDbUrils = new DBUrils(this, true);
+        mDbUtils = new DBUtils(this, true);
     }
 
     public void alterNoteData() {
         Intent mIntent = getIntent();
-        alterId = mIntent.getIntExtra(HomeFragment.ALTER_ID, -1);
+        alterId = mIntent.getIntExtra(HomeFragment.UP_ID, -1);
         if (alterId != -1) {
             NotesObjInfo mNotesObjInfo = (NotesObjInfo)
                     mIntent.getSerializableExtra(HomeFragment.ALTER_NOTE_OBJ);
@@ -99,7 +99,7 @@ public class AddNotesActivity extends Activity implements View.OnClickListener {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy年mm月dd日 HH:mm");
                 String time = format.format(new Date(System.currentTimeMillis()));
                 NotesObjInfo mNotesObjInfo = new NotesObjInfo(content, title, time, typeName, 0);
-                long result = mDbUrils.alterNote(alterId,mNotesObjInfo);
+                long result = mDbUtils.wIdUpNote(alterId, mNotesObjInfo);
                 if (result > 0) {
                     Intent mIntent = getIntent();
                     setResult(RESULT_OK, mIntent);
@@ -117,7 +117,7 @@ public class AddNotesActivity extends Activity implements View.OnClickListener {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy年mm月dd日 HH:mm");
                 String time = format.format(new Date(System.currentTimeMillis()));
                 NotesObjInfo mNotesObjInfo = new NotesObjInfo(content, title, time, typeName, 0);
-                long result = mDbUrils.addNs(mNotesObjInfo);
+                long result = mDbUtils.addNote(mNotesObjInfo);
                 if (result > 0) {
                     Intent mIntent = getIntent();
                     Bundle mBundle = new Bundle();

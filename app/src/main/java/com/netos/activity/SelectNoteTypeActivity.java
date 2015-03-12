@@ -7,14 +7,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.netos.activity.adapter.SelectNoteTypeAdapter;
@@ -22,7 +18,7 @@ import com.netos.activity.view.SwipeListView.SwipeMenu;
 import com.netos.activity.view.SwipeListView.SwipeMenuCreator;
 import com.netos.activity.view.SwipeListView.SwipeMenuItem;
 import com.netos.activity.view.SwipeListView.SwipeMenuListView;
-import com.netos.darabase.DBUrils;
+import com.netos.darabase.DBUtils;
 import com.notos.entity.NotesObjInfo;
 
 import java.util.List;
@@ -30,7 +26,7 @@ import java.util.List;
 
 public class SelectNoteTypeActivity extends Activity {
     SwipeMenuListView lvSelectType;
-    DBUrils mDbUrils;
+    DBUtils mDbUtils;
     List<String> tpList;
     SelectNoteTypeAdapter adapter;
     public static final String TYPE_NAME = "type_name";
@@ -63,8 +59,8 @@ public class SelectNoteTypeActivity extends Activity {
 
     public void showListView() {
         lvSelectType = (SwipeMenuListView) findViewById(R.id.lv_selectType);
-        mDbUrils = new DBUrils(this, false);
-        tpList = mDbUrils.querysType();
+        mDbUtils = new DBUtils(this, false);
+        tpList = mDbUtils.querysType();
 
         if (tpList != null) {
             adapter = new SelectNoteTypeAdapter(this, tpList);
@@ -107,10 +103,10 @@ public class SelectNoteTypeActivity extends Activity {
                 switch (index) {
                     case 0:
                         String nameType = (String) adapter.getItem(position);
-                        List<NotesObjInfo> mInfoList = mDbUrils.querysTypeObjCount(nameType);
+                        List<NotesObjInfo> mInfoList = mDbUtils.qyTypeCount(nameType);
                         mInfoList.size();
                         if (mInfoList.size() <= 0) {
-                            int DResult = mDbUrils.deleteType(nameType);
+                            int DResult = mDbUtils.dtType(nameType);
                             if (DResult <= 0) {
                                 Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
                                         Toast.LENGTH_SHORT).show();
@@ -121,7 +117,7 @@ public class SelectNoteTypeActivity extends Activity {
                             }
                         } else {
                             showDtDialog(nameType);
-                            int DResult = mDbUrils.deleteType(nameType);
+                            int DResult = mDbUtils.dtType(nameType);
                             if (DResult <= 0) {
                                 Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
                                         Toast.LENGTH_SHORT).show();
@@ -150,9 +146,9 @@ public class SelectNoteTypeActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String tStr = mEditText.getText().toString().trim();
-                String result = mDbUrils.queryTypeItem(tStr);
+                String result = mDbUtils.qyTypeItem(tStr);
                 if (result == null) {
-                    long connt = mDbUrils.addType(tStr);
+                    long connt = mDbUtils.addType(tStr);
                     if (connt > 0) {
                         sendData(ACTION_AD,AD_KEY_TYPE,tStr);
                         tpList.add(tStr);
@@ -180,7 +176,7 @@ public class SelectNoteTypeActivity extends Activity {
         mBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int result = mDbUrils.deleteTypeNote(typeName);
+                int result = mDbUtils.dtTpNote(typeName);
                 if (result <= 0) {
                     Toast.makeText(SelectNoteTypeActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
                 }

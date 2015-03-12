@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.netos.activity.R;
-import com.netos.darabase.DBUrils;
 import com.notos.entity.NotesObjInfo;
 
 import java.util.List;

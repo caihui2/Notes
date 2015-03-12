@@ -17,31 +17,33 @@ import com.netos.activity.AddNotesActivity;
 import com.netos.activity.R;
 import com.netos.activity.adapter.NotesDataAdapter;
 import com.netos.activity.adapter.SpinnerDataAdapter;
-import com.netos.darabase.DBUrils;
+import com.netos.darabase.DBUtils;
 import com.notos.entity.NotesObjInfo;
 
-import java.text.Normalizer;
 import java.util.List;
 
 /**
  * Created by yangcaihui on 15/2/14.
  */
-public class HomeFragment extends Fragment implements View.OnClickListener {
-    private static final int RESQUESTCODE = 1;
-    public static final String ACTION_ALTER_DATA = "action_alter_data";
-    public static final String ALTER_ID = "alter_id";
+public class HomeFragment extends Fragment implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener {
+    private static final int REFRESH_RECODE  = 1;
+    public static final int  UP_DA_RECODE  = 2;
+    public static final String ACTION_UP_DA = "action_update_data";
+    public static final String UP_ID = "update_id";
     public static final String ALTER_NOTE_OBJ = "alter_note_obj";
-    public static final  int  ALTERRESULTCODE = 2;
-    View rootView;
-    Spinner spTitle;
-    Context mActivity;
-    ListView lvNotes;
-    ImageView imAddNOtes;
+    private List<NotesObjInfo> nObjList;
+    private DBUtils dBUtil;
 
-    List<NotesObjInfo> mNotesObjInfoList;
-    NotesDataAdapter noteAdapter;
-    SpinnerDataAdapter adapter;
-    DBUrils mDbUrils;
+    NotesDataAdapter nAdter;
+    SpinnerDataAdapter sAdter;
+    View rootView;
+    Spinner sPinner;
+    Context mContext;
+    ListView lvNote;
+    ImageView iAddNote;
+
+
 
 
     @Override
@@ -51,78 +53,79 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
-    void init() {
-        mActivity = getActivity();
+    private void init() {
+        mContext = getActivity();
 
-        mDbUrils = new DBUrils(mActivity, false);
+        dBUtil = new DBUtils(mContext, false);
 
-        spTitle = (Spinner) rootView.findViewById(R.id.sp_title);
-        lvNotes = (ListView) rootView.findViewById(R.id.lv_notes);
-        showTypeData();
+        sPinner = (Spinner) rootView.findViewById(R.id.sp_title);
+        lvNote = (ListView) rootView.findViewById(R.id.lv_notes);
+        nAdter = new NotesDataAdapter(mContext);
+
+
         lvOnitemClick();
 
-        imAddNOtes = (ImageView) rootView.findViewById(R.id.im_addNote);
-        imAddNOtes.setOnClickListener(this);
+        iAddNote = (ImageView) rootView.findViewById(R.id.im_addNote);
+        iAddNote.setOnClickListener(this);
     }
 
-    void showTypeData() {
-        noteAdapter = new NotesDataAdapter(mActivity);
-        adapter = new SpinnerDataAdapter(mActivity, mDbUrils);
-        boolean dataState = adapter.listState();
-        if (dataState) {
-            spTitle.setAdapter(adapter);
-        }
-        spTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String type = (String) adapter.getItem(position);
-               lvShowState(type);
-            }
+//    private void showTypeData() {
+//        NDAadapter = new NotesDataAdapter(mContext);
+//        adapter = new SpinnerDataAdapter(mContext, mDbUrils);
+//        boolean dataState = adapter.listState();
+//        if (dataState) {
+//            sPinner.setAdapter(adapter);
+//        }
+//        sPinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String type = (String) adapter.getItem(position);
+//                lvShowState(type);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//        });
+//    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-    }
-
-    public void lvShowState(String type){
-        lvNotes.setAdapter(null);
-        mNotesObjInfoList = null;
+    private void lvShowState(String type) {
         if (type.equals("全部笔记")) {
-            mNotesObjInfoList = mDbUrils.querys();
-            if(mNotesObjInfoList != null){
-                noteAdapter = new NotesDataAdapter(mActivity);
-                noteAdapter.setList(mNotesObjInfoList);
-                lvNotes.setAdapter(noteAdapter);
+            nObjList = dBUtil.qyNote();
+            if (nObjList != null) {
+                nAdter = new NotesDataAdapter(mContext);
+                nAdter.setList(nObjList);
+                lvNote.setAdapter(nAdter);
             }
         } else {
             if (type != null) {
-                mNotesObjInfoList = mDbUrils.querysTypeObjCount(type);
-                if (mNotesObjInfoList != null) {
-                    noteAdapter = new NotesDataAdapter(mActivity);
-                    noteAdapter.setList(mNotesObjInfoList);
-                    lvNotes.setAdapter(noteAdapter);
+                nObjList = dBUtil.qyTypeCount(type);
+                if (nObjList != null) {
+                    nAdter = new NotesDataAdapter(mContext);
+                    nAdter.setList(nObjList);
+                    lvNote.setAdapter(sAdter);
 
                 } else {
-                    lvNotes.setAdapter(null);
+                    lvNote.setAdapter(null);
                 }
             }
         }
     }
 
-    void lvOnitemClick(){
-        lvNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void lvOnitemClick() {
+        lvNote.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NotesObjInfo mNotesObjInfo = mNotesObjInfoList.get(position);
-                int noteId = mDbUrils.querysId(mNotesObjInfo.getTitle());
+                NotesObjInfo mNotesObjInfo = nObjList.get(position);
+                int noteId = dBUtil.qyId(mNotesObjInfo.getTitle());
                 Intent alIntent = new Intent();
-                alIntent.setAction(ACTION_ALTER_DATA);
+                alIntent.setAction(ACTION_UP_DA);
                 alIntent.addCategory(Intent.CATEGORY_DEFAULT);
-                alIntent.putExtra(ALTER_ID, noteId);
+                alIntent.putExtra(UP_ID, noteId);
                 Bundle mBundle = new Bundle();
-                mBundle.putSerializable(ALTER_NOTE_OBJ,mNotesObjInfo);
+                mBundle.putSerializable(ALTER_NOTE_OBJ, mNotesObjInfo);
                 alIntent.putExtras(mBundle);
-               startActivityForResult(alIntent, ALTERRESULTCODE);
+                startActivityForResult(alIntent, UP_DA_RECODE);
             }
         });
     }
@@ -131,27 +134,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.im_addNote:
-                Intent mIntent = new Intent(mActivity, AddNotesActivity.class);
-                startActivityForResult(mIntent, RESQUESTCODE);
+                Intent mIntent = new Intent(mContext, AddNotesActivity.class);
+                startActivityForResult(mIntent, REFRESH_RECODE);
                 break;
         }
     }
 
 
     @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESQUESTCODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REFRESH_RECODE && resultCode == Activity.RESULT_OK) {
             NotesObjInfo mNotesObjInfo = (NotesObjInfo) data.getSerializableExtra(AddNotesActivity.ADDRESULT);
             if (mNotesObjInfo != null) {
                 lvShowState("全部笔记");
-                adapter.notifyDataSetInvalidated();
+                sAdter.notifyDataSetInvalidated();
             }
             //TODO
-         if(requestCode == ALTERRESULTCODE && requestCode == Activity.RESULT_OK) {
-             lvShowState("全部笔记");
-             adapter.notifyDataSetInvalidated();
-         }
+            if (requestCode == UP_DA_RECODE && requestCode == Activity.RESULT_OK) {
+                lvShowState("全部笔记");
+                sAdter.notifyDataSetInvalidated();
+            }
         }
     }
 }

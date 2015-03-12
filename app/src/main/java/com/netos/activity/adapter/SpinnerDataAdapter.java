@@ -8,12 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.netos.activity.R;
 import com.netos.activity.SelectNoteTypeActivity;
-import com.netos.darabase.DBUrils;
+import com.netos.darabase.DBUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +24,13 @@ public class SpinnerDataAdapter extends BaseAdapter{
     private Context mContext;
     private LayoutInflater mInflater;
     private List<String> mList;
-    public SpinnerDataAdapter(Context mContext, DBUrils mDbUrils){
+    public SpinnerDataAdapter(Context mContext, DBUtils mDbUtils){
         this.mContext = mContext;
          mInflater = LayoutInflater.from(mContext);
          mList = new ArrayList<String>();
         mList.add("全部笔记");
         setReceive();
-        List<String> oldL = mDbUrils.querysType();
+        List<String> oldL = mDbUtils.querysType();
         if(mList != null){
             for(String str : oldL){
                  mList.add(str);
