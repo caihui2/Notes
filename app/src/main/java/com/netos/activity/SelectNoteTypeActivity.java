@@ -1,8 +1,6 @@
 package com.netos.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,7 +8,6 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.netos.activity.adapter.SelectNoteTypeAdapter;
@@ -18,23 +15,13 @@ import com.netos.activity.view.SwipeListView.SwipeMenu;
 import com.netos.activity.view.SwipeListView.SwipeMenuCreator;
 import com.netos.activity.view.SwipeListView.SwipeMenuItem;
 import com.netos.activity.view.SwipeListView.SwipeMenuListView;
-import com.netos.darabase.DBUtils;
-import com.notos.entity.NotesObjInfo;
-
-import java.util.List;
-
+import com.notos.entity.TypeEntity;
 
 public class SelectNoteTypeActivity extends Activity {
     SwipeMenuListView lvSelectType;
-    DBUtils mDbUtils;
-    List<String> tpList;
     SelectNoteTypeAdapter adapter;
-    public static final String TYPE_NAME = "type_name";
-    public static final String ACTION_DT = "action_dt";
-    public static final String DT_KEY_TYPE = "dt_key_type";
 
-    public static final String ACTION_AD = "action_ad";
-    public static final String AD_KEY_TYPE = "ad_key_type";
+    public static final String TYPE_NAME = "type_name";
 
 
     @Override
@@ -45,7 +32,8 @@ public class SelectNoteTypeActivity extends Activity {
     }
 
     public void init() {
-        showListView();
+
+        //showListView();
     }
 
     public void closeWindow(View view) {
@@ -54,29 +42,27 @@ public class SelectNoteTypeActivity extends Activity {
     }
 
     public void addNotype(View view) {
-        showAddNotypeDialog();
-    }
+      //showAddNotypeDialog();
+     }
 
     public void showListView() {
         lvSelectType = (SwipeMenuListView) findViewById(R.id.lv_selectType);
-        mDbUtils = new DBUtils(this, false);
-        tpList = mDbUtils.querysType();
 
-        if (tpList != null) {
-            adapter = new SelectNoteTypeAdapter(this, tpList);
+        if (adapter.isEntity()) {
             lvSelectType.setAdapter(adapter);
             lvSelectType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                {
                     adapter.setSPosition(position);
                     adapter.setVState(true);
                     adapter.notifyDataSetChanged();
-                    String typeName = (String) adapter.getItem(position);
+                    String typeName = ((TypeEntity)adapter.getItem(position)).getName();
                     Intent mIntent = getIntent();
                     mIntent.putExtra(TYPE_NAME, typeName);
                     setResult(RESULT_OK, mIntent);
-                    Toast.makeText(SelectNoteTypeActivity.this, "笔记类型：" + typeName, Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(SelectNoteTypeActivity.this, "笔记类型：" + typeName,
+                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
@@ -97,38 +83,14 @@ public class SelectNoteTypeActivity extends Activity {
         lvSelectType.setMenuCreator(creator);
 
         //侧滑删除按钮监听
-        lvSelectType.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+        lvSelectType.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener()
+        {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        String nameType = (String) adapter.getItem(position);
-                        List<NotesObjInfo> mInfoList = mDbUtils.qyTypeCount(nameType);
-                        mInfoList.size();
-                        if (mInfoList.size() <= 0) {
-                            int DResult = mDbUtils.dtType(nameType);
-                            if (DResult <= 0) {
-                                Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                sendData(ACTION_DT,DT_KEY_TYPE,nameType);
-                                tpList.remove(position);
-                                adapter.notifyDataSetChanged();
-                            }
-                        } else {
-                            showDtDialog(nameType);
-                            int DResult = mDbUtils.dtType(nameType);
-                            if (DResult <= 0) {
-                                Toast.makeText(SelectNoteTypeActivity.this, "删除失败，请重新删除",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                sendData(ACTION_DT,DT_KEY_TYPE,nameType);
-                                tpList.remove(position);
-                                adapter.notifyDataSetChanged();
-                            }
-                        }
-
-                        break;
+                     adapter.dtType(position);
+                    break;
                 }
                 return false;
             }
@@ -136,68 +98,41 @@ public class SelectNoteTypeActivity extends Activity {
 
     }
 
-    //增加类型
-    public void showAddNotypeDialog() {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-        mBuilder.setTitle("添加笔记本类型");
-        final EditText mEditText = new EditText(this);
-        mBuilder.setView(mEditText);
-        mBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String tStr = mEditText.getText().toString().trim();
-                String result = mDbUtils.qyTypeItem(tStr);
-                if (result == null) {
-                    long connt = mDbUtils.addType(tStr);
-                    if (connt > 0) {
-                        sendData(ACTION_AD,AD_KEY_TYPE,tStr);
-                        tpList.add(tStr);
-                        adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    Toast.makeText(SelectNoteTypeActivity.this, "类型已存在", Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-        });
-        mBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        mBuilder.show();
-    }
+//    //增加类型
+//    public void showAddNotypeDialog() {
+//        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+//        mBuilder.setTitle("添加笔记本类型");
+//        final EditText mEditText = new EditText(this);
+//        mBuilder.setView(mEditText);
+//        mBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                String tStr = mEditText.getText().toString().trim();
+//                String result = no.qyTypeItem(tStr);
+//                if (result == null) {
+//                    long connt = mDbUtils.addType(tStr);
+//                    if (connt > 0) {
+//                        sendData(ACTION_AD,AD_KEY_TYPE,tStr);
+//                        tpList.add(tStr);
+//                        adapter.notifyDataSetChanged();
+//                    }
+//                } else {
+//                    Toast.makeText(SelectNoteTypeActivity.this, "类型已存在", Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+//            }
+//        });
+//        mBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        mBuilder.show();
+//    }
 
-    public void showDtDialog(final String typeName) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-        mBuilder.setTitle("提示");
-        mBuilder.setMessage("是否删除此类型中的笔记？");
-        mBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int result = mDbUtils.dtTpNote(typeName);
-                if (result <= 0) {
-                    Toast.makeText(SelectNoteTypeActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        mBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        mBuilder.show();
 
-    }
 
-    public void sendData(String action,String key,String type){
-        Intent mIntent = new Intent();
-        mIntent.setAction(action);
-        mIntent.putExtra(key,type);
-        sendBroadcast(mIntent);
-    }
 
 
     private int dp2px(int dp) {

@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.netos.activity.R;
-import com.notos.entity.NotesObjInfo;
+import com.netos.darabase.NoteUtil;
+import com.notos.entity.NoteEntity;
 
 import java.util.List;
 
@@ -18,18 +18,26 @@ import java.util.List;
 public class NotesDataAdapter extends BaseAdapter {
 
     private Context context;
-    private List<NotesObjInfo> mList;
+    private List<NoteEntity> mList;
     private LayoutInflater mInflater;
+    private NoteUtil noteUtil;
 
-    public NotesDataAdapter(Context context) {
+    public NotesDataAdapter(Context context, NoteUtil noteUtil) {
         this.context = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.noteUtil = noteUtil;
     }
 
-    public void setList(List<NotesObjInfo> mList){
-        this.mList = mList;
+    public void dataChange(String stpName) {
+        if (stpName.equals("全部笔记")) {
+            mList = noteUtil.queryNoteAll();
+        }
+        mList = noteUtil.queryNoteType(stpName);
     }
 
+    public boolean isDataEmpty() {
+        return mList != null ? true : false;
+    }
 
     @Override
     public int getCount() {
@@ -61,10 +69,10 @@ public class NotesDataAdapter extends BaseAdapter {
         } else {
             mViewHandler = (ViewHandler) convertView.getTag();
         }
-        NotesObjInfo mNotesObjInfo = (NotesObjInfo) getItem(position);
-        mViewHandler.teTitle.setText(mNotesObjInfo.getTitle());
-        mViewHandler.teTime.setText(mNotesObjInfo.getTime());
-        mViewHandler.teContent.setText(mNotesObjInfo.getContent());
+        NoteEntity mNoteEntity = (NoteEntity) getItem(position);
+        mViewHandler.teTitle.setText(mNoteEntity.getTitle());
+        mViewHandler.teTime.setText(mNoteEntity.getTime());
+        mViewHandler.teContent.setText(mNoteEntity.getContent());
         return convertView;
     }
 
