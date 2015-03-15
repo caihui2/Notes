@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import com.netos.activity.R;
 import com.netos.activity.SelectNoteTypeActivity;
 import com.netos.darabase.NoteUtil;
 import com.notos.entity.TypeEntity;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +36,7 @@ public class SpinnerDataAdapter extends BaseAdapter {
 
     private void initData(NoteUtil noteUtil){
         mList = new ArrayList<TypeEntity>();
-        mList.add(new TypeEntity(-1,"全部笔记",-1));
+        mList.add(new TypeEntity("全部笔记"));
         List<TypeEntity> oldL = noteUtil.queryTypeAll();
         if(oldL != null && oldL.size() > 0){
             for(TypeEntity en : oldL){
@@ -47,9 +50,9 @@ public class SpinnerDataAdapter extends BaseAdapter {
      */
     private void setReceive()
     {
-        IntentFilter dtFilter = new IntentFilter(SelectNoteTypeActivity.ACTION_DT);
+        IntentFilter dtFilter = new IntentFilter(SelectNoteTypeAdapter.ACTION_DT);
         mContext.registerReceiver(new SignalData(), dtFilter);
-        IntentFilter adFilter = new IntentFilter(SelectNoteTypeActivity.ACTION_AD);
+        IntentFilter adFilter = new IntentFilter(SelectNoteTypeAdapter.ACTION_AD);
         mContext.registerReceiver(new SignalData(), adFilter);
     }
 
@@ -110,12 +113,12 @@ public class SpinnerDataAdapter extends BaseAdapter {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(SelectNoteTypeActivity.ACTION_DT)) {
-                String type = intent.getStringExtra(SelectNoteTypeActivity.DT_KEY_TYPE);
-               // mList.remove(type);
-            } else if (action.equals(SelectNoteTypeActivity.ACTION_AD)) {
-                String type = intent.getStringExtra(SelectNoteTypeActivity.AD_KEY_TYPE);
-              //  mList.add(type);
+            if (action.equals(SelectNoteTypeAdapter.ACTION_DT)) {
+                TypeEntity type = (TypeEntity)intent.getSerializableExtra(SelectNoteTypeAdapter.DT_KEY_TYPE);
+                mList.remove(type);
+            } else if (action.equals(SelectNoteTypeAdapter.ACTION_AD)) {
+                TypeEntity type = (TypeEntity)intent.getSerializableExtra(SelectNoteTypeAdapter.AD_KEY_TYPE);
+                mList.add(type);
             }
         }
     }

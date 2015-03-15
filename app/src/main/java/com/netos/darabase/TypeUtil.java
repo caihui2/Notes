@@ -1,5 +1,6 @@
 package com.netos.darabase;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,16 +30,25 @@ public class TypeUtil extends  MediaUtil{
         return mList;
     }
 
+    public int addType(String type){
+        int result = 0;
+        ContentValues values = new ContentValues();
+        values.put(FIELD_TYPE_NAME,type);
+        result = (int)db.insert(FIELD_TYPE_NAME,null,values);
+        return result;
+    }
+
     //TODO
-    public void isExist(String type){
-//        boolean result =false;
-//       Cursor mCursor = db.query(TABLE_NAME_TYPE,null,FIELD_TYPE_NAME+"=?",new String[]{type},
-//                null,null,null);
-//       if(mCursor != null){
-//         while(mCursor.moveToNext()){
-//
-//         }
-//       }
+    public boolean isExist(String type){
+        String str = null;
+       Cursor mCursor = db.query(TABLE_NAME_TYPE,null,FIELD_TYPE_NAME+"=?",new String[]{type},
+                null,null,null);
+       if(mCursor != null){
+         while(mCursor.moveToNext()){
+             str = mCursor.getString(mCursor.getColumnIndex(FIELD_TYPE_NAME));
+         }
+       }
+        return str == null ? true :false ;
     }
 
     public int  deleteType(String type){

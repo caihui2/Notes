@@ -84,10 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REFRESH_RECODE && resultCode == Activity.RESULT_OK) {
-            NoteEntity mNotesObjInfo = (NoteEntity) data.getSerializableExtra(AddNotesActivity.ADDRESULT);
-            if (mNotesObjInfo != null) {
 
-            }
             //TODO
             if (requestCode == UP_DA_RECODE && requestCode == Activity.RESULT_OK) {
 

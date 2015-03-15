@@ -14,6 +14,10 @@ public class TypeEntity implements Serializable {
         this.name = name;
     }
 
+    public TypeEntity(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

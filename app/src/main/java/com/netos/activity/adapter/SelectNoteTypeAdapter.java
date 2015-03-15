@@ -150,6 +150,21 @@ public class SelectNoteTypeAdapter extends BaseAdapter {
 
     }
 
+    public void addTypeName(String type){
+       boolean result = noteUtil.isExist(type);
+        if(result){
+          int count  = noteUtil.addType(type);
+          if(count > 0){
+              TypeEntity mEntity =  new TypeEntity(type);
+              sendData(ACTION_AD,AD_KEY_TYPE,mEntity);
+              mList.add(mEntity);
+              notifyDataSetChanged();
+          }
+        }
+        Toast.makeText(context, "类型已存在", Toast.LENGTH_SHORT)
+                .show();
+    }
+
 
     public void sendData(String action,String key,TypeEntity type){
         Intent mIntent = new Intent();

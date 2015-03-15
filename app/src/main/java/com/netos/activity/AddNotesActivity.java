@@ -3,20 +3,13 @@ package com.netos.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
-import com.netos.activity.fragment.HomeFragment;
 import com.netos.darabase.NoteUtil;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-
-public class AddNotesActivity extends Activity implements View.OnClickListener {
+  public class AddNotesActivity extends Activity implements View.OnClickListener {
     public static final int REQUECT_TYPE_NAME = 1 ;
     int alterId = -1;
     String typeName = "全部笔记";
