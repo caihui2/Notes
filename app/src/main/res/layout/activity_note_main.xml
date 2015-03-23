@@ -1,9 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NoteMainAc">
 
+    <activity.netos.com.notes.view.SlideMenu
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <fragment
+            android:id="@+id/menu_fr"
+            class="activity.netos.com.notes.fragment.MenuFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/content_fr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+    </activity.netos.com.notes.view.SlideMenu>
+
+</FrameLayout>
