@@ -26,7 +26,7 @@ public class MenuFragment extends Fragment {
 
     public void initView(LayoutInflater inflater,ViewGroup container){
       mContext = getActivity();
-      menuLayout = (View)inflater.inflate(R.layout.fragment_menu,container);
+      menuLayout = (View)inflater.inflate(R.layout.fragment_menu,null);
 
     }
 }

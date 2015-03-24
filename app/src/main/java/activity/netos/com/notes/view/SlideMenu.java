@@ -12,356 +12,357 @@ import android.widget.Scroller;
 import android.widget.Toast;
 
 public class SlideMenu extends ViewGroup {
-	public static final int SCREEN_MENU = 0;
-	public static final int SCREEN_MAIN = 1;
-	private static final int SCREEN_INVALID = -1;
-	
-	private int mCurrentScreen;
-	private int mNextScreen = SCREEN_INVALID;
+    public static final int SCREEN_MENU = 0;
+    public static final int SCREEN_MAIN = 1;
+    private static final int SCREEN_INVALID = -1;
 
-	private Scroller mScroller;
-	private VelocityTracker mVelocityTracker;
-	private int mTouchSlop;
-	
-	private float mLastMotionX;
-	private float mLastMotionY;
+    private int mCurrentScreen;
+    private int mNextScreen = SCREEN_INVALID;
 
-	private final static int TOUCH_STATE_REST = 0;
-	private final static int TOUCH_STATE_SCROLLING = 1;
-	private static final int SNAP_VELOCITY = 1000;
+    private Scroller mScroller;
+    private VelocityTracker mVelocityTracker;
+    private int mTouchSlop;
 
-	public int mTouchState = TOUCH_STATE_REST;
-	private boolean mLocked;
-	private boolean mAllowLongPress;
+    private float mLastMotionX;
+    private float mLastMotionY;
 
-	public SlideMenu(Context context) {
-		this(context, null, 0);		
-	}
+    private final static int TOUCH_STATE_REST = 0;
+    private final static int TOUCH_STATE_SCROLLING = 1;
+    private static final int SNAP_VELOCITY = 1000;
 
-	public SlideMenu(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
+    public int mTouchState = TOUCH_STATE_REST;
+    private boolean mLocked;
+    private boolean mAllowLongPress;
 
-	public SlideMenu(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+    public SlideMenu(Context context) {
+        this(context, null, 0);
+    }
 
-		mScroller = new Scroller(getContext());
-		mCurrentScreen = SCREEN_MAIN;
-		mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
-		
-	}
+    public SlideMenu(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		measureViews(widthMeasureSpec, heightMeasureSpec);
-	}
+    public SlideMenu(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
 
-	public void measureViews(int widthMeasureSpec, int heightMeasureSpec) {
-		View menuView = getChildAt(0);
-		menuView.measure(menuView.getLayoutParams().width + menuView.getLeft()
-				+ menuView.getRight(), heightMeasureSpec);
-        System.out.println(menuView.getLayoutParams().height+"====="+menuView.getLayoutParams().width);
-		View contentView = getChildAt(1);
-		contentView.measure(widthMeasureSpec, heightMeasureSpec);
-	}
+        mScroller = new Scroller(getContext());
+        mCurrentScreen = SCREEN_MAIN;
+        mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
 
-	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		int childCount = getChildCount();
-		if (childCount != 2) {
-			throw new IllegalStateException(
-					"The childCount of SlidingMenu must be 2");
-		}
+    }
 
-		View menuView = getChildAt(0);
-		final int width = menuView.getMeasuredWidth();
-		menuView.layout(-width, 0, 0, menuView.getMeasuredHeight());
-		
-		View contentView = getChildAt(1);
-		contentView.layout(0, 0, contentView.getMeasuredWidth(),
-				contentView.getMeasuredHeight());
-	}
-	
-	@Override
-	protected void onFinishInflate() {
-		super.onFinishInflate();
-		View child;
-		for (int i = 0; i < getChildCount(); i++) {
-			child = getChildAt(i);
-			child.setFocusable(true);
-			child.setClickable(true);
-		}
-	}
-	
-	@Override
-	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		if (mLocked) {
-			return true;
-		}
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        measureViews(widthMeasureSpec, heightMeasureSpec);
+    }
 
-		final int action = ev.getAction();
-		if ((action == MotionEvent.ACTION_MOVE)
-				&& (mTouchState != TOUCH_STATE_REST)) {
-			return true;
-		}
+    public void measureViews(int widthMeasureSpec, int heightMeasureSpec) {
+        View menuView = getChildAt(0);
+        menuView.measure(menuView.getLayoutParams().width + menuView.getLeft()
+                + menuView.getRight(), heightMeasureSpec);
+        System.out.println(menuView.getLayoutParams().height + "=====" + menuView.getLayoutParams().width);
+        View contentView = getChildAt(1);
+        contentView.measure(widthMeasureSpec, heightMeasureSpec);
+    }
 
-		final float x = ev.getX();
-		final float y = ev.getY();
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        int childCount = getChildCount();
+        if (childCount != 2) {
+            throw new IllegalStateException(
+                    "The childCount of SlidingMenu must be 2");
+        }
 
-		switch (action) {
-		case MotionEvent.ACTION_MOVE:
+        View menuView = getChildAt(0);
+        final int width = menuView.getMeasuredWidth();
+        menuView.layout(-width, 0, 0, menuView.getMeasuredHeight());
 
-			final int xDiff = (int) Math.abs(x - mLastMotionX);
-			final int yDiff = (int) Math.abs(y - mLastMotionY);
+        View contentView = getChildAt(1);
+        contentView.layout(0, 0, contentView.getMeasuredWidth(),
+                contentView.getMeasuredHeight());
+    }
 
-			final int touchSlop = mTouchSlop;
-			boolean xMoved = xDiff > touchSlop;
-			boolean yMoved = yDiff > touchSlop;
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        View child;
+        for (int i = 0; i < getChildCount(); i++) {
+            child = getChildAt(i);
+            child.setFocusable(true);
+            child.setClickable(true);
+        }
+    }
 
-			if (xMoved || yMoved) {
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (mLocked) {
+            return true;
+        }
 
-				if (xMoved) {
-					// Scroll if the user moved far enough along the X axis
-					mTouchState = TOUCH_STATE_SCROLLING;
-					enableChildrenCache();
-				}
-				// Either way, cancel any pending longpress
-				if (mAllowLongPress) {
-					mAllowLongPress = false;
-					// Try canceling the long press. It could also have been
-					// scheduled
-					// by a distant descendant, so use the mAllowLongPress flag
-					// to block
-					// everything
-					final View currentScreen = getChildAt(mCurrentScreen);
-					currentScreen.cancelLongPress();
-				}
-			}
-			break;
+        final int action = ev.getAction();
+        if ((action == MotionEvent.ACTION_MOVE)
+                && (mTouchState != TOUCH_STATE_REST)) {
+            return true;
+        }
 
-		case MotionEvent.ACTION_DOWN:
-			// Remember location of down touch
-			mLastMotionX = x;
-			mLastMotionY = y;
-			mAllowLongPress = true;
+        final float x = ev.getX();
+        final float y = ev.getY();
 
-			mTouchState = mScroller.isFinished() ? TOUCH_STATE_REST
-					: TOUCH_STATE_SCROLLING;
+        switch (action) {
+            case MotionEvent.ACTION_MOVE:
 
-			break;
+                final int xDiff = (int) Math.abs(x - mLastMotionX);
+                final int yDiff = (int) Math.abs(y - mLastMotionY);
 
-		case MotionEvent.ACTION_CANCEL:
-		case MotionEvent.ACTION_UP:
-			// Release the drag
-			clearChildrenCache();
-			mTouchState = TOUCH_STATE_REST;
-			mAllowLongPress = false;
-			break;
-		}
+                final int touchSlop = mTouchSlop;
+                boolean xMoved = xDiff > touchSlop;
+                boolean yMoved = yDiff > touchSlop;
+
+                if (xMoved || yMoved) {
+
+                    if (xMoved) {
+                        // Scroll if the user moved far enough along the X axis
+                        mTouchState = TOUCH_STATE_SCROLLING;
+                        enableChildrenCache();
+                    }
+                    // Either way, cancel any pending longpress
+                    if (mAllowLongPress) {
+                        mAllowLongPress = false;
+                        // Try canceling the long press. It could also have been
+                        // scheduled
+                        // by a distant descendant, so use the mAllowLongPress flag
+                        // to block
+                        // everything
+                        final View currentScreen = getChildAt(mCurrentScreen);
+                        currentScreen.cancelLongPress();
+                    }
+                }
+                break;
+
+            case MotionEvent.ACTION_DOWN:
+                // Remember location of down touch
+                mLastMotionX = x;
+                mLastMotionY = y;
+                mAllowLongPress = true;
+
+                mTouchState = mScroller.isFinished() ? TOUCH_STATE_REST
+                        : TOUCH_STATE_SCROLLING;
+
+                break;
+
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                // Release the drag
+                clearChildrenCache();
+                mTouchState = TOUCH_STATE_REST;
+                mAllowLongPress = false;
+                break;
+        }
 
 		/*
-		 * The only time we want to intercept motion events is if we are in the
+         * The only time we want to intercept motion events is if we are in the
 		 * drag mode.
 		 */
-		return mTouchState != TOUCH_STATE_REST;
-	}
-	
-	void enableChildrenCache() {
-		final int count = getChildCount();
-		for (int i = 0; i < count; i++) {
-			final View layout = (View) getChildAt(i);
-			layout.setDrawingCacheEnabled(true);
-		}
-	}
+        return mTouchState != TOUCH_STATE_REST;
+    }
 
-	void clearChildrenCache() {
-		final int count = getChildCount();
-		for (int i = 0; i < count; i++) {
-			final View layout = (View) getChildAt(i);
-			layout.setDrawingCacheEnabled(false);
-		}
-	}
-	
-	@Override
-	public boolean onTouchEvent(MotionEvent ev) {
-		if (mLocked) {
-			return true;
-		}
+    void enableChildrenCache() {
+        final int count = getChildCount();
+        for (int i = 0; i < count; i++) {
+            final View layout = (View) getChildAt(i);
+            layout.setDrawingCacheEnabled(true);
+        }
+    }
 
-		if (mVelocityTracker == null) {
-			mVelocityTracker = VelocityTracker.obtain();
-		}
-		mVelocityTracker.addMovement(ev);
+    void clearChildrenCache() {
+        final int count = getChildCount();
+        for (int i = 0; i < count; i++) {
+            final View layout = (View) getChildAt(i);
+            layout.setDrawingCacheEnabled(false);
+        }
+    }
 
-		final int action = ev.getAction();
-		final float x = ev.getX();
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (mLocked) {
+            return true;
+        }
 
-		switch (action) {
-		case MotionEvent.ACTION_DOWN:
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(ev);
+
+        final int action = ev.getAction();
+        final float x = ev.getX();
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
 			/*
 			 * If being flinged and user touches, stop the fling. isFinished
 			 * will be false if being flinged.
 			 */
-			if (!mScroller.isFinished()) {
-				mScroller.abortAnimation();
-			}
+                if (!mScroller.isFinished()) {
+                    mScroller.abortAnimation();
+                }
 
-			// Remember where the motion event started
-			mLastMotionX = x;
-			break;
-		case MotionEvent.ACTION_MOVE:
-			if (mTouchState == TOUCH_STATE_SCROLLING) {
-				// Scroll to follow the motion event
-				final int deltaX = (int) (mLastMotionX - x);
-				mLastMotionX = x;
+                // Remember where the motion event started
+                mLastMotionX = x;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (mTouchState == TOUCH_STATE_SCROLLING) {
+                    // Scroll to follow the motion event
+                    final int deltaX = (int) (mLastMotionX - x);
+                    mLastMotionX = x;
 
-				if (deltaX < 0) {
-					if (deltaX + getScrollX() >= -getChildAt(0).getWidth()) {
-						scrollBy(deltaX, 0);
-					}
+                    if (deltaX < 0) {
+                        if (deltaX + getScrollX() >= -getChildAt(0).getWidth()) {
+                            scrollBy(deltaX, 0);
+                        }
 
-				} else if (deltaX > 0) {
-					final int availableToScroll = getChildAt(
-							getChildCount() - 1).getRight()
-							- getScrollX() - getWidth();
+                    } else if (deltaX > 0) {
+                        //----
+                        final int availableToScroll = getChildAt(
+                                getChildCount() - 1).getRight()
+                                - getScrollX() - getWidth();
 
-					if (availableToScroll > 0) {
-						scrollBy(Math.min(availableToScroll, deltaX), 0);
-					}
-				}
-			}
-			break;
-		case MotionEvent.ACTION_UP:
-			if (mTouchState == TOUCH_STATE_SCROLLING) {
-				final VelocityTracker velocityTracker = mVelocityTracker;
-				velocityTracker.computeCurrentVelocity(1000);
-				int velocityX = (int) velocityTracker.getXVelocity();
+                        if (availableToScroll > 0) {
+                            scrollBy(Math.min(availableToScroll, deltaX), 0);
+                        }
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if (mTouchState == TOUCH_STATE_SCROLLING) {
+                    final VelocityTracker velocityTracker = mVelocityTracker;
+                    velocityTracker.computeCurrentVelocity(1000);
+                    int velocityX = (int) velocityTracker.getXVelocity();
 
-				if (velocityX > SNAP_VELOCITY && mCurrentScreen == SCREEN_MAIN) {
-					// Fling hard enough to move left
-					snapToScreen(SCREEN_MENU);
-				} else if (velocityX < -SNAP_VELOCITY
-						&& mCurrentScreen == SCREEN_MENU) {
-					// Fling hard enough to move right
-					snapToScreen(SCREEN_MAIN);
-				} else {
-					snapToDestination();
-				}
+                    if (velocityX > SNAP_VELOCITY && mCurrentScreen == SCREEN_MAIN) {
+                        // Fling hard enough to move left
+                        snapToScreen(SCREEN_MENU);
+                    } else if (velocityX < -SNAP_VELOCITY
+                            && mCurrentScreen == SCREEN_MENU) {
+                        // Fling hard enough to move right
+                        snapToScreen(SCREEN_MAIN);
+                    } else {
+                        snapToDestination();
+                    }
 
-				if (mVelocityTracker != null) {
-					mVelocityTracker.recycle();
-					mVelocityTracker = null;
-				}
-			}
-			mTouchState = TOUCH_STATE_REST;
-			break;
-		case MotionEvent.ACTION_CANCEL:
-			mTouchState = TOUCH_STATE_REST;
-		}
+                    if (mVelocityTracker != null) {
+                        mVelocityTracker.recycle();
+                        mVelocityTracker = null;
+                    }
+                }
+                mTouchState = TOUCH_STATE_REST;
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                mTouchState = TOUCH_STATE_REST;
+        }
 
-		return true;
-	}
-	
-	@Override
-	public void computeScroll() {
-		if (mScroller.computeScrollOffset()) {
-			scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-		} else if (mNextScreen != SCREEN_INVALID) {
-			mCurrentScreen = Math.max(0,
-					Math.min(mNextScreen, getChildCount() - 1));
-			mNextScreen = SCREEN_INVALID;
-			clearChildrenCache();
-		}
-	}
+        return true;
+    }
 
-	@Override
-	public void scrollTo(int x, int y) {
-		super.scrollTo(x, y);
-		postInvalidate();
-	}
+    @Override
+    public void computeScroll() {
+        if (mScroller.computeScrollOffset()) {
+            scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+        } else if (mNextScreen != SCREEN_INVALID) {
+            mCurrentScreen = Math.max(0,
+                    Math.min(mNextScreen, getChildCount() - 1));
+            mNextScreen = SCREEN_INVALID;
+            clearChildrenCache();
+        }
+    }
 
-	@Override
-	protected void dispatchDraw(Canvas canvas) {
-		final int scrollX = getScrollX();
-		super.dispatchDraw(canvas);
-		canvas.translate(scrollX, 0);
-	}
+    @Override
+    public void scrollTo(int x, int y) {
+        super.scrollTo(x, y);
+        postInvalidate();
+    }
 
-	@Override
-	public boolean dispatchUnhandledMove(View focused, int direction) {
-		if (direction == View.FOCUS_LEFT) {
-			if (getCurrentScreen() > 0) {
-				snapToScreen(getCurrentScreen() - 1);
-				return true;
-			}
-		} else if (direction == View.FOCUS_RIGHT) {
-			if (getCurrentScreen() < getChildCount() - 1) {
-				snapToScreen(getCurrentScreen() + 1);
-				return true;
-			}
-		}
-		return super.dispatchUnhandledMove(focused, direction);
-	}
-	
-	protected void snapToScreen(int whichScreen) {
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        final int scrollX = getScrollX();
+        super.dispatchDraw(canvas);
+        canvas.translate(scrollX, 0);
+    }
 
-		enableChildrenCache();
+    @Override
+    public boolean dispatchUnhandledMove(View focused, int direction) {
+        if (direction == View.FOCUS_LEFT) {
+            if (getCurrentScreen() > 0) {
+                snapToScreen(getCurrentScreen() - 1);
+                return true;
+            }
+        } else if (direction == View.FOCUS_RIGHT) {
+            if (getCurrentScreen() < getChildCount() - 1) {
+                snapToScreen(getCurrentScreen() + 1);
+                return true;
+            }
+        }
+        return super.dispatchUnhandledMove(focused, direction);
+    }
 
-		whichScreen = Math.max(0, Math.min(whichScreen, getChildCount() - 1));
-		System.out.println(whichScreen+"====="+getChildCount());
-		boolean changingScreens = whichScreen != mCurrentScreen;
+    protected void snapToScreen(int whichScreen) {
 
-		mNextScreen = whichScreen;
+        enableChildrenCache();
 
-		View focusedChild = getFocusedChild();
-		if (focusedChild != null && changingScreens
-				&& focusedChild == getChildAt(mCurrentScreen)) {
-			focusedChild.clearFocus();
-		}
+        whichScreen = Math.max(0, Math.min(whichScreen, getChildCount() - 1));
+        System.out.println(whichScreen + "=====" + getChildCount());
+        boolean changingScreens = whichScreen != mCurrentScreen;
 
-		final int newX = (whichScreen - 1) * getChildAt(0).getWidth();
-		System.out.println(getChildAt(1).getWidth()+">>>>");
-		final int delta = newX - getScrollX();
-		System.out.println(delta +"===>>"+newX +"==--"+getScrollX());
-		mScroller.startScroll(getScrollX(), 0, delta, 0, Math.abs(delta) * 2);
-		invalidate();
-	}
+        mNextScreen = whichScreen;
 
-	protected void snapToDestination() {
-		if (getScrollX() == 0) {
-			return;
-		}
-		final int screenWidth = getChildAt(0).getWidth();
-		final int whichScreen = (screenWidth + getScrollX() + (screenWidth / 2))
-				/ screenWidth;
-		snapToScreen(whichScreen);
-	}
-	
-	public int getCurrentScreen() {
-		return mCurrentScreen;
-	}
-	
-	public boolean isMainScreenShowing() {
-		return mCurrentScreen == SCREEN_MAIN;
-	}
-	
-	public void openMenu() {
-		mCurrentScreen = SCREEN_MENU;
-		snapToScreen(mCurrentScreen);
-	}
-	
-	public void closeMenu() {
-		mCurrentScreen = SCREEN_MAIN;
-		snapToScreen(mCurrentScreen);
-	}
-	
-	public void unlock() {
-		mLocked = false;
-	}
+        View focusedChild = getFocusedChild();
+        if (focusedChild != null && changingScreens
+                && focusedChild == getChildAt(mCurrentScreen)) {
+            focusedChild.clearFocus();
+        }
 
-	public void lock() {
-		mLocked = true;
-	}
-	
+        final int newX = (whichScreen - 1) * getChildAt(0).getWidth();
+        System.out.println(getChildAt(1).getWidth() + ">>>>");
+        final int delta = newX - getScrollX();
+        System.out.println(delta + "===>>" + newX + "==--" + getScrollX());
+        mScroller.startScroll(getScrollX(), 0, delta, 0, Math.abs(delta) * 2);
+        invalidate();
+    }
+
+    protected void snapToDestination() {
+        if (getScrollX() == 0) {
+            return;
+        }
+        final int screenWidth = getChildAt(0).getWidth();
+        final int whichScreen = (screenWidth + getScrollX() + (screenWidth / 2))
+                / screenWidth;
+        snapToScreen(whichScreen);
+    }
+
+    public int getCurrentScreen() {
+        return mCurrentScreen;
+    }
+
+    public boolean isMainScreenShowing() {
+        return mCurrentScreen == SCREEN_MAIN;
+    }
+
+    public void openMenu() {
+        mCurrentScreen = SCREEN_MENU;
+        snapToScreen(mCurrentScreen);
+    }
+
+    public void closeMenu() {
+        mCurrentScreen = SCREEN_MAIN;
+        snapToScreen(mCurrentScreen);
+    }
+
+    public void unlock() {
+        mLocked = false;
+    }
+
+    public void lock() {
+        mLocked = true;
+    }
+
 }
