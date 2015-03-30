@@ -35,7 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ly_below"
-        android:layout_below="@+id/iv_background"></ListView>
+        android:layout_below="@+id/iv_background">
+        </ListView>
     <!--below button-->
     <LinearLayout
         android:id="@+id/ly_below"

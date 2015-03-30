@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import activity.netos.com.notes.R;
+import activity.netos.com.notes.adapter.MenuListAdapter;
 
 /**
  * Created by yangcaihui on 15/3/23.
@@ -24,6 +25,7 @@ public class MenuFragment extends Fragment {
     private ListView lvMenu;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initView(inflater,container);
+        initAdapter();
         return menuLayout;
     }
 
@@ -31,5 +33,10 @@ public class MenuFragment extends Fragment {
       mContext = getActivity();
       menuLayout = (View)inflater.inflate(R.layout.fragment_menu,null);
       lvMenu = (ListView)menuLayout.findViewById(R.id.lv_menu);
+    }
+
+    public void initAdapter(){
+        MenuListAdapter menuListAdapter = new MenuListAdapter(mContext);
+        lvMenu.setAdapter(menuListAdapter);
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dip" />
+    <ImageView
+        android:id="@+id/im_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="30dip"
+        android:src="@drawable/menu_selector"
+        />
+    <ImageView
+        android:id="@+id/im_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="20dip"
+        android:layout_toRightOf="@id/im_point"
+        android:src="@drawable/menu_all_note_icon"/>
+    <TextView
+        android:id="@+id/te_itName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="20dip"
+        android:layout_toRightOf="@id/im_icon"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:text="全部笔记"/>
+</RelativeLayout>
