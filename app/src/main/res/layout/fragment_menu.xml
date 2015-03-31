@@ -30,13 +30,14 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <ListView
+    <ExpandableListView
         android:id="@+id/lv_menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/ly_below"
-        android:layout_below="@+id/iv_background">
-        </ListView>
+        android:layout_below="@+id/iv_background"
+        android:divider="@null">
+        </ExpandableListView>
     <!--below button-->
     <LinearLayout
         android:id="@+id/ly_below"
