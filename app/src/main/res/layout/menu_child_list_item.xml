@@ -1,50 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
+    android:layout_height="match_parent">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dip" />
     <ImageView
-        android:id="@+id/im_point"
+        android:id="@+id/im_points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:paddingLeft="16dip"
+        android:paddingLeft="60dip"
         android:visibility="invisible"
         android:src="@drawable/menu_selector"
         />
     <ImageView
-        android:id="@+id/im_icon"
+        android:id="@+id/im_icons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:paddingLeft="20dip"
-        android:layout_toRightOf="@id/im_point"
+        android:layout_toRightOf="@id/im_points"
         android:src="@drawable/menu_all_note_icon"/>
     <TextView
-        android:id="@+id/te_itName"
+        android:id="@+id/te_itNames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:paddingLeft="20dip"
-        android:layout_toRightOf="@id/im_icon"
+        android:layout_toRightOf="@id/im_icons"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:text="全部笔记"/>
-    <ImageView
-        android:id="@+id/im_click"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingRight="40dip"
-        android:layout_alignParentRight="true"
-        android:visibility="invisible"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/te_itName"
-        android:paddingLeft="90dip"/>
+        android:layout_toRightOf="@id/te_itNames"
+        android:paddingLeft="80dip"/>
+
 </RelativeLayout>

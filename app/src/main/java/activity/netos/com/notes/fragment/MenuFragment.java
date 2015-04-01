@@ -20,7 +20,7 @@ import activity.netos.com.notes.adapter.MenuListAdapter;
 /**
  * Created by yangcaihui on 15/3/23.
  */
-public class MenuFragment extends Fragment {
+public class MenuFragment extends Fragment implements ExpandableListView.OnGroupClickListener,ExpandableListView.OnChildClickListener{
     private View menuLayout;
     private Context mContext;
     // view init
@@ -30,7 +30,7 @@ public class MenuFragment extends Fragment {
     private MenuListAdapter menuListAdapter;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initView(inflater,container);
-        initAdapter();
+        initManage();
         return menuLayout;
     }
 
@@ -40,10 +40,32 @@ public class MenuFragment extends Fragment {
       lvMenu = (ExpandableListView)menuLayout.findViewById(R.id.lv_menu);
     }
 
-    public void initAdapter(){
-        menuListAdapter = new MenuListAdapter(mContext);
-        lvMenu.setAdapter(menuListAdapter);
+    public void initManage(){
+      menuListAdapter = new MenuListAdapter(mContext);
+      lvMenu.setGroupIndicator(null);
+      lvMenu.setAdapter(menuListAdapter);
+      menuListAdapter.setIsChilked(true);
+      lvMenu.setOnGroupClickListener(this);
+      lvMenu.setOnChildClickListener(this);
     }
 
+    @Override
+    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        if(menuListAdapter != null && groupPosition != 3){
+           menuListAdapter.setGPosition(groupPosition);
+           menuListAdapter.setIsChilked(true);
+           menuListAdapter.notifyDataSetChanged();
+        }
+        return false;
+    }
 
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        if(menuListAdapter != null){
+            menuListAdapter.setcPosition(childPosition);
+            menuListAdapter.setIsChilked(false);
+            menuListAdapter.notifyDataSetChanged();
+        }
+        return false;
+    }
 }
