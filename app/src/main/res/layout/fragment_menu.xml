@@ -24,7 +24,7 @@
         android:layout_below="@id/iv_head"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dip"
-        android:background="@drawable/green_button"
+        android:background="@drawable/mail_toast_bg"
         android:text="立即登录"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
@@ -47,17 +47,18 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/bt_meber"
-            android:layout_width="150dip"
+            android:layout_width="60dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dip"
+            android:textColor="@android:color/secondary_text_dark"
             android:text="会员"
             android:background="@drawable/abs_menu_dropdown"/>
         <ImageButton
             android:id="@+id/ib_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dip"
+            android:layout_marginLeft="30dip"
             android:layout_gravity="center_vertical"
             android:src="@drawable/menu_setting"
             android:background="@drawable/abs_menu_dropdown"/>
