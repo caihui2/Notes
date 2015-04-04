@@ -21,7 +21,6 @@
             android:id="@+id/content_fr"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/background_dark"
             android:orientation="vertical"/>
     </activity.netos.com.notes.view.SlideMenu>
 

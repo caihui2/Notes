@@ -61,7 +61,6 @@ public class SlideMenu extends ViewGroup {
         View menuView = getChildAt(0);
         menuView.measure(menuView.getLayoutParams().width + menuView.getLeft()
                 + menuView.getRight(), heightMeasureSpec);
-        System.out.println(menuView.getLayoutParams().height + "=====" + menuView.getLayoutParams().width);
         View contentView = getChildAt(1);
         contentView.measure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -310,7 +309,6 @@ public class SlideMenu extends ViewGroup {
         enableChildrenCache();
 
         whichScreen = Math.max(0, Math.min(whichScreen, getChildCount() - 1));
-        System.out.println(whichScreen + "=====" + getChildCount());
         boolean changingScreens = whichScreen != mCurrentScreen;
 
         mNextScreen = whichScreen;
@@ -322,9 +320,7 @@ public class SlideMenu extends ViewGroup {
         }
 
         final int newX = (whichScreen - 1) * getChildAt(0).getWidth();
-        System.out.println(getChildAt(1).getWidth() + ">>>>");
         final int delta = newX - getScrollX();
-        System.out.println(delta + "===>>" + newX + "==--" + getScrollX());
         mScroller.startScroll(getScrollX(), 0, delta, 0, Math.abs(delta) * 2);
         invalidate();
     }
