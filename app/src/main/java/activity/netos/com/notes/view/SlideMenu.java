@@ -198,7 +198,7 @@ public class SlideMenu extends ViewGroup {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-			/*
+            /*
 			 * If being flinged and user touches, stop the fling. isFinished
 			 * will be false if being flinged.
 			 */

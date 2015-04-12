@@ -10,7 +10,7 @@ import android.widget.TextView;
 /**
  * Created by yangcaihui on 15/4/4.
  */
-public class CldTeamFragment extends Fragment{
+public class CldTeamFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

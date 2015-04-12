@@ -6,6 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dip" />
+
     <ImageView
         android:id="@+id/im_points"
         android:layout_width="wrap_content"
@@ -13,8 +14,8 @@
         android:layout_centerVertical="true"
         android:paddingLeft="60dip"
         android:visibility="invisible"
-        android:src="@drawable/menu_selector"
-        />
+        android:src="@drawable/menu_selector" />
+
     <ImageView
         android:id="@+id/im_icons"
         android:layout_width="wrap_content"
@@ -22,7 +23,8 @@
         android:layout_centerVertical="true"
         android:paddingLeft="20dip"
         android:layout_toRightOf="@id/im_points"
-        android:src="@drawable/menu_all_note_icon"/>
+        android:src="@drawable/menu_all_note_icon" />
+
     <TextView
         android:id="@+id/te_itNames"
         android:layout_width="wrap_content"
@@ -32,11 +34,12 @@
         android:layout_toRightOf="@id/im_icons"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:text="全部笔记"/>
+        android:text="全部笔记" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/te_itNames"
-        android:paddingLeft="80dip"/>
+        android:paddingLeft="80dip" />
 
 </RelativeLayout>

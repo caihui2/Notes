@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/slid_menu_icon_unread" android:state_pressed="false" ></item>
+    <item android:drawable="@drawable/slid_menu_icon" android:state_pressed="true"></item>
+</selector>

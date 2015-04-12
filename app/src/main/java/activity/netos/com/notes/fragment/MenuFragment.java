@@ -44,9 +44,10 @@ public class MenuFragment extends Fragment
         initManage();
         return menuLayout;
     }
+
     public void initView(LayoutInflater inflater, ViewGroup container) {
 
-        mContext = (NoteMainAc)getActivity();
+        mContext = (NoteMainAc) getActivity();
         menuLayout = (View) inflater.inflate(R.layout.fragment_menu, null);
         lvMenu = (ExpandableListView) menuLayout.findViewById(R.id.lv_menu);
         ivHead = (ImageView) menuLayout.findViewById(R.id.iv_head);
@@ -70,8 +71,8 @@ public class MenuFragment extends Fragment
             menuListAdapter.setGPosition(groupPosition);
             menuListAdapter.setIsChilked(true);
             menuListAdapter.notifyDataSetChanged();
+            mContext.setReplaceId(groupPosition, true);
         }
-        mContext.setReplaceId(groupPosition,true);
         return false;
     }
 
@@ -81,20 +82,20 @@ public class MenuFragment extends Fragment
             menuListAdapter.setcPosition(childPosition);
             menuListAdapter.setIsChilked(false);
             menuListAdapter.notifyDataSetChanged();
+            mContext.setReplaceId(childPosition, false);
         }
-        mContext.setReplaceId(childPosition,false);
         return false;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_head:
                 Intent mIntent = new Intent(mContext, UserEnterAc.class);
                 startActivity(mIntent);
                 break;
             case R.id.bt_enter:
-                Intent intent = new Intent(mContext,UserEnterAc.class);
+                Intent intent = new Intent(mContext, UserEnterAc.class);
                 startActivity(intent);
                 break;
 

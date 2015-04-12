@@ -62,16 +62,16 @@ public class MenuListAdapter extends BaseExpandableListAdapter {
         childList.add(chlid4);
     }
 
-    public void setGPosition(int gPosition){
+    public void setGPosition(int gPosition) {
         this.gPosition = gPosition;
     }
 
-    public void setcPosition(int cPosition){
+    public void setcPosition(int cPosition) {
         this.cPosition = cPosition;
     }
 
-    public void setIsChilked(boolean isChilked){
-        this.isChilked =isChilked;
+    public void setIsChilked(boolean isChilked) {
+        this.isChilked = isChilked;
     }
 
     @Override
@@ -138,7 +138,7 @@ public class MenuListAdapter extends BaseExpandableListAdapter {
             groupViewHandler.getImClick().setImageDrawable(expand);
         }
         // point state
-        if(gPosition == groupPosition && isChilked){
+        if (gPosition == groupPosition && isChilked) {
             groupViewHandler.getImPoint().setVisibility(View.VISIBLE);
         } else {
             groupViewHandler.getImPoint().setVisibility(View.INVISIBLE);
@@ -162,7 +162,7 @@ public class MenuListAdapter extends BaseExpandableListAdapter {
         childViewHandler.getTeItNames().setText(menuItemEnty.getItemName());
 
         //point state
-        if(cPosition == childPosition && !isChilked){
+        if (cPosition == childPosition && !isChilked) {
             childViewHandler.getImPoints().setVisibility(View.VISIBLE);
         } else {
             childViewHandler.getImPoints().setVisibility(View.INVISIBLE);
